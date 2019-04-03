@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import Yahtz from "./yahtz/Yahtz";
+import Dashboard from "./dashboard/Dashboard";
 
 import setAuthToken from "../utils/setAuthToken";
 import { getCurrentProfile } from "../actions/profileActions";
@@ -28,11 +29,11 @@ class Landing extends Component {
       <div className="">
         <div className="row text-center py-2 logo">
           <b>
-            Yaht<span>z</span>io
+            Yaht<span>z</span>
           </b>
         </div>
         <div className="row">
-          <Yahtz />
+          {this.props.game.online === null ? <Dashboard /> : <Yahtz />}
         </div>
       </div>
     );
@@ -43,6 +44,8 @@ Landing.propTypes = {
   auth: PropTypes.object,
   yahtz: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired,
+  score: PropTypes.object.isRequired,
+  game: PropTypes.object.isRequired,
   setAuthToken: PropTypes.func,
   setCurrentUser: PropTypes.func,
   getCurrentProfile: PropTypes.func.isRequired
@@ -51,7 +54,9 @@ Landing.propTypes = {
 const mapStateToProps = state => ({
   auth: state.auth,
   yahtz: state.yahtz,
-  profile: state.profile
+  profile: state.profile,
+  score: state.score,
+  game: state.game
 });
 
 export default connect(

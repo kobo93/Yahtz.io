@@ -68,16 +68,16 @@ class Scoreboard extends Component {
     //const a2YahtzeeBonus = scores.player2.active.includes("yahtzeeBonus");
 
     return (
-      <div className="mx-4 row">
+      <div className="row">
         <div className="col">
           <div className="row text-center">
-            <div className="col" style={{ widthi: "25%" }} />
-            <div className="col">Player1</div>
-            <div className="col">Player2</div>
+            <div className="col-3" style={{ width: "25%" }} />
+            <div className="col mx-3">Player1</div>
+            <div className="col mx-3">Player2</div>
           </div>
-          <div className="row w-100 text-center text-center">
-            <div className="col">
-              <i className="diceScore fas fa-2x  fa-dice-one" />
+          <div className="row w-100 text-right">
+            <div className="col-3">
+              <i className="diceScore fas fa-2x fa-dice-one" />
             </div>
             <TableRow
               name="ones"
@@ -94,8 +94,8 @@ class Scoreboard extends Component {
               active={a2Ones}
             />
           </div>
-          <div className="row p0 w-100 text-center">
-            <div className="col">
+          <div className="row p0 w-100 text-right">
+            <div className="col-3">
               <i className="diceScore fas fa-2x fa-dice-two" />
             </div>
             <TableRow
@@ -113,8 +113,8 @@ class Scoreboard extends Component {
               active={a2Twos}
             />
           </div>
-          <div className="row p0 w-100 text-center">
-            <div className="col">
+          <div className="row p0 w-100 text-right">
+            <div className="col-3">
               <i className="diceScore fas fa-2x fa-dice-three" />
             </div>
             <TableRow
@@ -132,8 +132,8 @@ class Scoreboard extends Component {
               active={a2Threes}
             />
           </div>
-          <div className="row p0 w-100 text-center">
-            <div className="col">
+          <div className="row p0 w-100 text-right">
+            <div className="col-3">
               <i className="diceScore fas fa-2x fa-dice-four" />
             </div>
             <TableRow
@@ -151,8 +151,8 @@ class Scoreboard extends Component {
               active={a2Fours}
             />
           </div>
-          <div className="row p0 w-100 text-center">
-            <div className="col">
+          <div className="row p0 w-100 text-right">
+            <div className="col-3">
               <i className="diceScore fas fa-2x fa-dice-five" />
             </div>
             <TableRow
@@ -170,8 +170,8 @@ class Scoreboard extends Component {
               active={a2Fives}
             />
           </div>
-          <div className="row p0 w-100 text-center">
-            <div className="col">
+          <div className="row p0 w-100 text-right">
+            <div className="col-3">
               <i className="diceScore fas fa-2x fa-dice-six" />
             </div>
             <TableRow
@@ -189,8 +189,9 @@ class Scoreboard extends Component {
               active={a2Sixes}
             />
           </div>
-          <div className="row p0 w-100 text-center bonus">
-            <div className="col">Upper Bonus</div>
+          <hr />
+          <div className="row p0 w-100 text-right bonus">
+            <div className="col-3">Upper Bonus</div>
             <TableRow
               name="upperBonus"
               player="player1"
@@ -204,8 +205,8 @@ class Scoreboard extends Component {
               active={false}
             />
           </div>
-          <div className="row p0 w-100 text-center total">
-            <div className="col">Subtotal</div>
+          <div className="row p0 w-100 text-right total">
+            <div className="col-3">Subtotal</div>
             <TableRow
               name="subtotal"
               player="player1"
@@ -219,8 +220,9 @@ class Scoreboard extends Component {
               active={false}
             />
           </div>
-          <div className="row p0 w-100 text-center">
-            <div className="col">Three Of A Kind</div>
+          <br />
+          <div className="row p0 w-100 text-right">
+            <div className="col-3">Three Of A Kind</div>
             <TableRow
               name="threeOfAKind"
               player="player1"
@@ -236,8 +238,8 @@ class Scoreboard extends Component {
               active={a2ThreeOfAKind}
             />
           </div>
-          <div className="row p0 w-100 text-center">
-            <div className="col">Four Of A Kind</div>
+          <div className="row p0 w-100 text-right">
+            <div className="col-3">Four Of A Kind</div>
             <TableRow
               name="fourOfAKind"
               player="player1"
@@ -253,8 +255,8 @@ class Scoreboard extends Component {
               active={a2FourOfAKind}
             />
           </div>
-          <div className="row p0 w-100 text-center">
-            <div className="col">Full House</div>
+          <div className="row p0 w-100 text-right">
+            <div className="col-3">Full House</div>
             <TableRow
               name="fullHouse"
               player="player1"
@@ -270,8 +272,8 @@ class Scoreboard extends Component {
               active={a2FullHouse}
             />
           </div>
-          <div className="row p0 w-100 text-center">
-            <div className="col">Small Straight</div>
+          <div className="row p0 w-100 text-right">
+            <div className="col-3">Small Straight</div>
             <TableRow
               name="smallStraight"
               player="player1"
@@ -287,8 +289,8 @@ class Scoreboard extends Component {
               active={a2SmallStraight}
             />
           </div>
-          <div className="row p0 w-100 text-center">
-            <div className="col">Large Straight</div>
+          <div className="row p0 w-100 text-right">
+            <div className="col-3">Large Straight</div>
             <TableRow
               name="largeStraight"
               player="player1"
@@ -304,8 +306,8 @@ class Scoreboard extends Component {
               active={a2LargeStraight}
             />
           </div>
-          <div className="row p0 w-100 text-center">
-            <div className="col">Chance</div>
+          <div className="row p0 w-100 text-right">
+            <div className="col-3">Chance</div>
             <TableRow
               name="chance"
               player="player1"
@@ -321,8 +323,8 @@ class Scoreboard extends Component {
               active={a2Chance}
             />
           </div>
-          <div className="row p0 w-100 text-center">
-            <div className="col">Yahtzee</div>
+          <div className="row p0 w-100 text-right">
+            <div className="col-3">Yahtzee</div>
             <TableRow
               name="yahtzee"
               player="player1"
@@ -338,8 +340,9 @@ class Scoreboard extends Component {
               active={a2Yahtzee}
             />
           </div>
-          <div className="row p0 w-100 text-center bonus">
-            <div className="col">Yahtzee Bonus</div>
+          <hr />
+          <div className="row p0 w-100 text-right bonus">
+            <div className="col-3">Yahtzee Bonus</div>
             <TableRow
               name="yahtzeeBonus"
               player="player1"
@@ -353,8 +356,8 @@ class Scoreboard extends Component {
               active={false}
             />
           </div>
-          <div className="row p0 w-100 text-center total">
-            <div className="col">Grand Total</div>
+          <div className="row p0 w-100 text-right total">
+            <div className="col-3">Grand Total</div>
             <TableRow
               name="grandTotal"
               player="player1"

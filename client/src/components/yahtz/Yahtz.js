@@ -5,7 +5,10 @@ import PropTypes from "prop-types";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from "reactstrap";
 import { changeDice, setRolling } from "../../actions/yahtzActions";
 import { updateScore, postScore, clearGame } from "../../actions/scoreActions";
-import { getCurrentProfile, setAchievements } from "../../actions/profileActions";
+import {
+  getCurrentProfile,
+  setAchievements
+} from "../../actions/profileActions";
 import setAuthToken from "../../utils/setAuthToken";
 
 import PlayerControls from "./PlayerControls";
@@ -156,64 +159,64 @@ class Yahtz extends Component {
           </ModalFooter>
         </Modal>
         <div
-              id="gameBoard"
-              className="col-md-8 col-sm-12 d-flex flex-column justify-content-between py-2"
+          id="gameBoard"
+          className="board col-md-7 col-sm-12 d-flex flex-column justify-content-between py-2"
         >
-            <div className="row">
-              <div className="col">
-                <Scoreboard rolling={this.props.yahtz.rolling} />
-                <div className="row diceContainer justify-content-center">
-                  <Dice
-                    dice={this.props.yahtz.Dice0}
-                    rollingClick={this.handleRollClick}
-                    selectDice={this.selectDice}
-                    gameText={this.props.yahtz.gameText}
-                    diceRolling={this.props.yahtz.rolling}
-                    diceSkin={diceSkin}
-                    size={60}
-                  />
-                  <Dice
-                    dice={this.props.yahtz.Dice1}
-                    rollingClick={this.handleRollClick}
-                    selectDice={this.selectDice}
-                    gameText={this.props.yahtz.gameText}
-                    diceRolling={this.props.yahtz.rolling}
-                    diceSkin={diceSkin}
-                    size={60}
-                  />
-                  <Dice
-                    dice={this.props.yahtz.Dice2}
-                    rollingClick={this.handleRollClick}
-                    selectDice={this.selectDice}
-                    gameText={this.props.yahtz.gameText}
-                    diceRolling={this.props.yahtz.rolling}
-                    diceSkin={diceSkin}
-                    size={60}
-                  />
-                  <Dice
-                    dice={this.props.yahtz.Dice3}
-                    rollingClick={this.handleRollClick}
-                    selectDice={this.selectDice}
-                    gameText={this.props.yahtz.gameText}
-                    diceRolling={this.props.yahtz.rolling}
-                    diceSkin={diceSkin}
-                    size={60}
-                  />
-                  <Dice
-                    dice={this.props.yahtz.Dice4}
-                    rollingClick={this.handleRollClick}
-                    selectDice={this.selectDice}
-                    gameText={this.props.yahtz.gameText}
-                    diceRolling={this.props.yahtz.rolling}
-                    diceSkin={diceSkin}
-                    size={60}
-                  />
-                </div>
-                <div className="row justify-content-center mt-2">
-                  <PlayerControls handleRollClick={this.handleRollClick} />
-                </div>
+          <div className="row p-0">
+            <div className="col p-0">
+              <Scoreboard rolling={this.props.yahtz.rolling} />
+              <div className="row diceContainer justify-content-center">
+                <Dice
+                  dice={this.props.yahtz.Dice0}
+                  rollingClick={this.handleRollClick}
+                  selectDice={this.selectDice}
+                  gameText={this.props.yahtz.gameText}
+                  diceRolling={this.props.yahtz.rolling}
+                  diceSkin={diceSkin}
+                  size={60}
+                />
+                <Dice
+                  dice={this.props.yahtz.Dice1}
+                  rollingClick={this.handleRollClick}
+                  selectDice={this.selectDice}
+                  gameText={this.props.yahtz.gameText}
+                  diceRolling={this.props.yahtz.rolling}
+                  diceSkin={diceSkin}
+                  size={60}
+                />
+                <Dice
+                  dice={this.props.yahtz.Dice2}
+                  rollingClick={this.handleRollClick}
+                  selectDice={this.selectDice}
+                  gameText={this.props.yahtz.gameText}
+                  diceRolling={this.props.yahtz.rolling}
+                  diceSkin={diceSkin}
+                  size={60}
+                />
+                <Dice
+                  dice={this.props.yahtz.Dice3}
+                  rollingClick={this.handleRollClick}
+                  selectDice={this.selectDice}
+                  gameText={this.props.yahtz.gameText}
+                  diceRolling={this.props.yahtz.rolling}
+                  diceSkin={diceSkin}
+                  size={60}
+                />
+                <Dice
+                  dice={this.props.yahtz.Dice4}
+                  rollingClick={this.handleRollClick}
+                  selectDice={this.selectDice}
+                  gameText={this.props.yahtz.gameText}
+                  diceRolling={this.props.yahtz.rolling}
+                  diceSkin={diceSkin}
+                  size={60}
+                />
+              </div>
+              <div className="row justify-content-center mt-2">
+                <PlayerControls handleRollClick={this.handleRollClick} />
               </div>
             </div>
+          </div>
         </div>
         <div className="col-md-4 col-sm-12 border border-primary rounded-top my-3">
           <h1>TO DO: game update/message log board</h1>

@@ -10,11 +10,17 @@
   --sizerem: 60rem;
 }
 
+footer {
+  position: absolute;
+  width: 100%;
+}
+
 /************************************************
 *** LANDING
 ************************************************/
 .mainContainer {
   background-image: url("cubes.png");
+  min-height: 100vh;
 }
 
 .logo {
@@ -225,20 +231,167 @@
 /********************************************
 ****    Game Board
 ********************************************/
-#gameBoard {
-  background: #757F9A;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #D7DDE8, #757F9A);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #D7DDE8, #757F9A); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */   
+.board {
+  margin-bottom: 70px;
+  background: rgb(233, 223, 196);
+  min-height: 20%;
+
+  background: -moz-linear-gradient(
+    left,
+    rgba(233, 223, 196, 1) 0%,
+    rgba(233, 223, 196, 1) 1%,
+    rgba(237, 227, 200, 1) 2%,
+    rgba(237, 227, 200, 1) 24%,
+    rgba(235, 221, 195, 1) 25%,
+    rgba(233, 223, 196, 1) 48%,
+    rgba(235, 221, 195, 1) 49%,
+    rgba(230, 216, 189, 1) 52%,
+    rgba(230, 216, 189, 1) 53%,
+    rgba(233, 219, 192, 1) 54%,
+    rgba(230, 216, 189, 1) 55%,
+    rgba(230, 216, 189, 1) 56%,
+    rgba(233, 219, 192, 1) 57%,
+    rgba(230, 216, 189, 1) 58%,
+    rgba(230, 216, 189, 1) 73%,
+    rgba(233, 219, 192, 1) 74%,
+    rgba(233, 219, 192, 1) 98%,
+    rgba(235, 221, 195, 1) 100%
+  );
+
+  background: -webkit-gradient(
+    linear,
+    left top,
+    right top,
+    color-stop(0%, rgba(233, 223, 196, 1)),
+    color-stop(1%, rgba(233, 223, 196, 1)),
+    color-stop(2%, rgba(237, 227, 200, 1)),
+    color-stop(24%, rgba(237, 227, 200, 1)),
+    color-stop(25%, rgba(235, 221, 195, 1)),
+    color-stop(48%, rgba(233, 223, 196, 1)),
+    color-stop(49%, rgba(235, 221, 195, 1)),
+    color-stop(52%, rgba(230, 216, 189, 1)),
+    color-stop(53%, rgba(230, 216, 189, 1)),
+    color-stop(54%, rgba(233, 219, 192, 1)),
+    color-stop(55%, rgba(230, 216, 189, 1)),
+    color-stop(56%, rgba(230, 216, 189, 1)),
+    color-stop(57%, rgba(233, 219, 192, 1)),
+    color-stop(58%, rgba(230, 216, 189, 1)),
+    color-stop(73%, rgba(230, 216, 189, 1)),
+    color-stop(74%, rgba(233, 219, 192, 1)),
+    color-stop(98%, rgba(233, 219, 192, 1)),
+    color-stop(100%, rgba(235, 221, 195, 1))
+  );
+
+  background: -webkit-linear-gradient(
+    left,
+    rgba(233, 223, 196, 1) 0%,
+    rgba(233, 223, 196, 1) 1%,
+    rgba(237, 227, 200, 1) 2%,
+    rgba(237, 227, 200, 1) 24%,
+    rgba(235, 221, 195, 1) 25%,
+    rgba(233, 223, 196, 1) 48%,
+    rgba(235, 221, 195, 1) 49%,
+    rgba(230, 216, 189, 1) 52%,
+    rgba(230, 216, 189, 1) 53%,
+    rgba(233, 219, 192, 1) 54%,
+    rgba(230, 216, 189, 1) 55%,
+    rgba(230, 216, 189, 1) 56%,
+    rgba(233, 219, 192, 1) 57%,
+    rgba(230, 216, 189, 1) 58%,
+    rgba(230, 216, 189, 1) 73%,
+    rgba(233, 219, 192, 1) 74%,
+    rgba(233, 219, 192, 1) 98%,
+    rgba(235, 221, 195, 1) 100%
+  );
+
+  background: -o-linear-gradient(
+    left,
+    rgba(233, 223, 196, 1) 0%,
+    rgba(233, 223, 196, 1) 1%,
+    rgba(237, 227, 200, 1) 2%,
+    rgba(237, 227, 200, 1) 24%,
+    rgba(235, 221, 195, 1) 25%,
+    rgba(233, 223, 196, 1) 48%,
+    rgba(235, 221, 195, 1) 49%,
+    rgba(230, 216, 189, 1) 52%,
+    rgba(230, 216, 189, 1) 53%,
+    rgba(233, 219, 192, 1) 54%,
+    rgba(230, 216, 189, 1) 55%,
+    rgba(230, 216, 189, 1) 56%,
+    rgba(233, 219, 192, 1) 57%,
+    rgba(230, 216, 189, 1) 58%,
+    rgba(230, 216, 189, 1) 73%,
+    rgba(233, 219, 192, 1) 74%,
+    rgba(233, 219, 192, 1) 98%,
+    rgba(235, 221, 195, 1) 100%
+  );
+
+  background: -ms-linear-gradient(
+    left,
+    rgba(233, 223, 196, 1) 0%,
+    rgba(233, 223, 196, 1) 1%,
+    rgba(237, 227, 200, 1) 2%,
+    rgba(237, 227, 200, 1) 24%,
+    rgba(235, 221, 195, 1) 25%,
+    rgba(233, 223, 196, 1) 48%,
+    rgba(235, 221, 195, 1) 49%,
+    rgba(230, 216, 189, 1) 52%,
+    rgba(230, 216, 189, 1) 53%,
+    rgba(233, 219, 192, 1) 54%,
+    rgba(230, 216, 189, 1) 55%,
+    rgba(230, 216, 189, 1) 56%,
+    rgba(233, 219, 192, 1) 57%,
+    rgba(230, 216, 189, 1) 58%,
+    rgba(230, 216, 189, 1) 73%,
+    rgba(233, 219, 192, 1) 74%,
+    rgba(233, 219, 192, 1) 98%,
+    rgba(235, 221, 195, 1) 100%
+  );
+
+  background: linear-gradient(
+    left,
+    rgba(233, 223, 196, 1) 0%,
+    rgba(233, 223, 196, 1) 1%,
+    rgba(237, 227, 200, 1) 2%,
+    rgba(237, 227, 200, 1) 24%,
+    rgba(235, 221, 195, 1) 25%,
+    rgba(233, 223, 196, 1) 48%,
+    rgba(235, 221, 195, 1) 49%,
+    rgba(230, 216, 189, 1) 52%,
+    rgba(230, 216, 189, 1) 53%,
+    rgba(233, 219, 192, 1) 54%,
+    rgba(230, 216, 189, 1) 55%,
+    rgba(230, 216, 189, 1) 56%,
+    rgba(233, 219, 192, 1) 57%,
+    rgba(230, 216, 189, 1) 58%,
+    rgba(230, 216, 189, 1) 73%,
+    rgba(233, 219, 192, 1) 74%,
+    rgba(233, 219, 192, 1) 98%,
+    rgba(235, 221, 195, 1) 100%
+  );
+
+  background-size: 120px;
+  background-repeat: repeat;
+
   border-radius: 1rem;
 }
 
 .scoreField {
-  color: #444;
-  border-radius: 12px;
+  color: #eee;
+  background-color: #666;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .table-sm {
   font-size: 0.8rem;
+}
+
+.bonus,
+.total {
+  color: #fff;
+  font-weight: 400;
+  cursor: default;
 }
 
 /*********************************************

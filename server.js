@@ -12,6 +12,8 @@ const app = express();
 const http = nodehttp.Server(app);
 const io = require("socket.io")(http);
 
+const rooms = [];
+
 //Body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -21,10 +23,7 @@ const db = require("./config/keys").mongoURI;
 
 //Connect DB
 mongoose
-  .connect(
-    db,
-    { useNewUrlParser: true }
-  )
+  .connect(db, { useNewUrlParser: true })
   .then(() => console.log("MongoDB connected"))
   .catch(err => console.log(err));
 
@@ -42,14 +41,40 @@ app.use("/api/scores", scores);
 app.use("/api/profile", profile);
 
 io.on("connection", socket => {
-  console.log(`a user connected ${socket.io}`);
+  console.log(`a user connected ${socket.id}`);
+  socket.join("/global");
   socket.on("action", action => {
-    console.log(action.type);
-    socket.broadcast.emit("action", {
-      type: action.type,
-      payload: action.payload,
-      from: "server"
-    });
+    if (action.type === "server/JOIN_LOBBY") {
+      socket.join(action.payload.lobby);
+      socket.broadcast.emit("action", {
+        type: "ROOMS_LIST",
+        payload: { rooms: socket.adapter.rooms },
+        from: "server"
+      });
+    } else if (
+      action.type === "server/SET_GAMETYPE" &&
+      action.payload.gameType === "start"
+    ) {
+      /*rooms.push(socket.id);
+      socket.join(socket.id);*/
+    } else if (action.type === "server/GET_ROOMS") {
+      socket.emit("action", {
+        type: "ROOMS_LIST",
+        payload: { rooms: socket.adapter.rooms, socketid: socket.id },
+        from: "server"
+      });
+    } else if (
+      action.type === "server/SET_GAMETYPE" &&
+      action.payload.gameType === "local"
+    ) {
+      socket.leave();
+    } else {
+      socket.broadcast.emit("action", {
+        type: action.type,
+        payload: action.payload,
+        from: "server"
+      });
+    }
   });
 });
 

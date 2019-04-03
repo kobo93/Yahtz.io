@@ -7,6 +7,7 @@ import {
   SETTING_SCORE,
   WIPE_SCORE,
   SET_TOTALS,
+  END_TURN,
   CLEAR_GAME,
   GET_ERRORS
 } from "./types";

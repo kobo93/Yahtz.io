@@ -32,3 +32,10 @@ export const GET_PROFILE = "GET_PROFILE";
 export const PROFILE_NOT_FOUND = "PROFILE_NOT_FOUND";
 export const CLEAR_CURRENT_PROFILE = "CLEAR_CURRENT_PROFILE";
 export const SET_DICE_STYLE = "SET_DICE_STYLE";
+
+//game actions
+export const ROOMS_LIST = "ROOMS_LIST";
+export const JOIN_LOBBY = "server/JOIN_LOBBY";
+export const GET_ROOMS = "server/GET_ROOMS";
+export const SET_ONLINE = "SET_ONLINE";
+export const SET_GAMETYPE = "SET_GAMETYPE";

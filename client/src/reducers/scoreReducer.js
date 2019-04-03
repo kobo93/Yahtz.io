@@ -1,4 +1,6 @@
 import {
+  SET_ONLINE,
+  SET_GAMETYPE,
   SET_SCORE,
   UPDATE_SCORE,
   SETTING_SCORE,
@@ -9,10 +11,9 @@ import {
 
 const initialState = {
   gameOver: false,
-  turn: 0,
   won: null,
-  online: false,
   startingPlayer: true,
+  turn: 0,
   settingScore: false,
   player1: {
     ones: 0,
@@ -185,14 +186,15 @@ export default function(state = initialState, action) {
         state[player].yahtzeeBonus;
 
       const won =
-        state.turn === 25 && state.player1.grandtotal > grandtotal
-          ? true
-          : false;
+        state.turn === 26 &&
+        state.player1.grandtotal > state.player2.grandtotal;
+
       return {
         ...state,
+        ...state,
+        startingPlayer: !state.startingPlayer,
         won: won,
         turn: state.turn + 1,
-        startingPlayer: !state.startingPlayer,
         [player]: {
           ...state[player],
           upperBonus: bonus,

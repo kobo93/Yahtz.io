@@ -2,39 +2,56 @@ import React from "react";
 import classnames from "classnames";
 import PropTypes from "prop-types";
 
+/*Might need to add ["form-control", "form-control-lg"] to classes*/
+
 const InputGroup = ({
+  id,
   name,
+  label,
   placeholder,
+  classes,
   value,
   error,
   icon,
   type,
   onChange
 }) => {
+  console.log(...classes);
   return (
     <div className="input-group mb-3">
-      <div className="input-group-prepend">
-        <span className="input-group-text">
-          <i className={icon} />
-        </span>
-      </div>
+      {type === "text" ? (
+        <div className="input-group-prepend">
+          <span className="input-group-text">
+            <i className={icon} />
+          </span>
+        </div>
+      ) : null}
       <input
         type={type}
-        className={classnames("form-control form-control-lg", {
+        className={classnames(classes, {
           "is-invalid": error
         })}
         placeholder={placeholder}
         name={name}
         value={value}
         onChange={onChange}
+        id={id ? id : null}
       />
+      {label ? (
+        <label className="form-check-label" htmlFor="private">
+          Private
+        </label>
+      ) : null}
       {error && <div className="invalid-feedback">{error}</div>}
     </div>
   );
 };
 
 InputGroup.PropTypes = {
+  id: PropTypes.string,
   name: PropTypes.string.isRequired,
+  label: PropTypes.string,
+  classes: PropTypes.object,
   placeholder: PropTypes.string,
   value: PropTypes.string.isRequired,
   icon: PropTypes.string,
