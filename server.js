@@ -42,34 +42,38 @@ app.use("/api/profile", profile);
 
 io.on("connection", socket => {
   console.log(`a user connected ${socket.id}`);
-  socket.join("/global");
+  socket.join(["/global", "/newbie"]);
   socket.on("action", action => {
     if (action.type === "server/JOIN_LOBBY") {
-      socket.join(action.payload.lobby);
-      socket.broadcast.emit("action", {
+      socket.join(action.payload);
+      socket.to("/newbie").broadcast.emit("action", {
         type: "ROOMS_LIST",
         payload: { rooms: socket.adapter.rooms },
         from: "server"
       });
-    } else if (
-      action.type === "server/SET_GAMETYPE" &&
-      action.payload.gameType === "start"
+    } else if (action.type === "server/SET_GAMETYPE")
+      switch (action.payload.gameType) {
+        case "start":
+          return;
+        case "join":
+          return;
+        case "local":
+          socket.leave("/newbie");
+      }
+    /*rooms.push(socket.id);
+      socket.join(socket.id);*/ else if (
+      action.type === "server/GET_ROOMS"
     ) {
-      /*rooms.push(socket.id);
-      socket.join(socket.id);*/
-    } else if (action.type === "server/GET_ROOMS") {
       socket.emit("action", {
         type: "ROOMS_LIST",
         payload: { rooms: socket.adapter.rooms, socketid: socket.id },
         from: "server"
       });
-    } else if (
-      action.type === "server/SET_GAMETYPE" &&
-      action.payload.gameType === "local"
-    ) {
-      socket.leave();
     } else {
-      socket.broadcast.emit("action", {
+      var room = Object.keys(socket.rooms).find(
+        r => r.includes("private/") || r.includes("public/")
+      );
+      socket.to(room).broadcast.emit("action", {
         type: action.type,
         payload: action.payload,
         from: "server"

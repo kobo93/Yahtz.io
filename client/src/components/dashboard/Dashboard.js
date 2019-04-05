@@ -7,6 +7,7 @@ import WaitForPlayer from "./WaitForPlayer";
 import RoomList from "./RoomList";
 
 import { setGameType, joinLobby, getRooms } from "../../actions/gameActions";
+import { setStartingPlayer } from "../../actions/scoreActions";
 
 class Dashboard extends Component {
   constructor() {
@@ -19,6 +20,15 @@ class Dashboard extends Component {
     };
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
+    //TO DO: work this into one onChange
+    this.onSelectingRoom = this.onSelectingRoom.bind(this);
+  }
+
+  onSelectingRoom(e) {
+    const newRoom =
+      e.target.name === "roomName" ? e.target.value : e.target.name;
+    console.log(`${e.target.name} + ${e.target.value}`);
+    this.setState({ [e.target.name]: e.target.value });
   }
 
   onSubmit(gameType) {
@@ -29,16 +39,18 @@ class Dashboard extends Component {
           online: false
         });
       case "join":
-        return this.props.setGameType({
+        this.props.setStartingPlayer(false);
+        this.props.joinLobby(this.state.selectedRoom);
+        this.props.setGameType({
           gameType: gameType,
           online: true
         });
       case "start":
-        this.props.joinLobby({
-          lobby: `${this.state.lobbyPrivate ? "private" : "public"}/${
+        this.props.joinLobby(
+          `${this.state.lobbyPrivate ? "private" : "public"}/${
             this.state.roomID
           }`
-        });
+        );
         this.props.setGameType({
           gameType: gameType,
           online: true
@@ -98,6 +110,7 @@ class Dashboard extends Component {
             rooms={this.props.game.rooms}
             loading={this.props.game.roomsLoading}
             selectedRoom={this.state.selectedRoom}
+            onSelectingRoom={this.onSelectingRoom}
           />
         )}
         <div className="row mt-3">
@@ -125,7 +138,8 @@ Dashboard.propTypes = {
   game: PropTypes.object.isRequired,
   setGameType: PropTypes.func.isRequired,
   getRooms: PropTypes.func.isRequired,
-  joinLobby: PropTypes.func.isRequired
+  joinLobby: PropTypes.func.isRequired,
+  setStartingPlayer: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -135,5 +149,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { setGameType, getRooms, joinLobby }
+  { setGameType, getRooms, joinLobby, setStartingPlayer }
 )(Dashboard);

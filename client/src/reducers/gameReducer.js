@@ -42,7 +42,7 @@ export default function(state = initialState, action) {
     case JOIN_LOBBY:
       return {
         ...state,
-        currentRoom: action.payload.lobby
+        currentRoom: action.payload
       };
     default:
       return state;

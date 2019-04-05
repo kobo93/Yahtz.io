@@ -62,7 +62,12 @@ class Yahtz extends Component {
       !this.props.yahtz.Dice1.rolling &&
       !this.props.yahtz.Dice2.rolling &&
       !this.props.yahtz.Dice3.rolling &&
-      !this.props.yahtz.Dice4.rolling
+      !this.props.yahtz.Dice4.rolling &&
+      ((this.props.yahtz.roll % 2 === 0 &&
+        this.props.game.gameType === "start") ||
+        (this.props.yahtz.roll % 2 !== 0 &&
+          this.props.game.gameType === "join") ||
+        this.props.game.gameType === "local")
     ) {
       const dice = [
         this.props.yahtz.Dice0.value,
@@ -90,11 +95,11 @@ class Yahtz extends Component {
     }
   }
 
+  // set the new side for the dice and stop rolling
   changeSide(dice) {
     var randomValue = Math.floor(Math.random() * 6) + 1;
     var newDiceProps = {
-      id: dice.id,
-      spinning: false,
+      ...dice,
       rolling: false,
       selected: false,
       value: randomValue,
@@ -116,21 +121,23 @@ class Yahtz extends Component {
     }
   }
 
+  //Maybe we should handle he random number while we wait.
+  //set passed dice to rolling then draw random numbers
   handleRollClick(dice) {
     var newDiceProps = {
       ...dice,
       spinning: false,
-      rolling: true,
-      selected: false
+      rolling: true
+      //selected: true
     };
     this.props.changeDice(newDiceProps);
     setTimeout(() => {
       this.changeSide(dice);
-      var newDiceProps = {
-        ...dice,
-        rolling: false
-      };
-      changeDice(newDiceProps);
+      //var newDiceProps = {
+      //  ...dice,
+      //  rolling: false
+      //};
+      //changeDice(newDiceProps);
     }, 3000);
   }
 
@@ -229,6 +236,7 @@ class Yahtz extends Component {
 Yahtz.propTypes = {
   auth: PropTypes.object,
   yahtz: PropTypes.object.isRequired,
+  game: PropTypes.object.isRequired,
   scores: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired,
   setAuthToken: PropTypes.func,
@@ -245,7 +253,8 @@ const mapStateToProps = state => ({
   auth: state.auth,
   yahtz: state.yahtz,
   scores: state.score,
-  profile: state.profile
+  profile: state.profile,
+  game: state.game
 });
 
 export default connect(

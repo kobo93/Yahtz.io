@@ -9,8 +9,14 @@ import {
   SET_TOTALS,
   END_TURN,
   CLEAR_GAME,
-  GET_ERRORS
+  GET_ERRORS,
+  SET_STARTING_PLAYER
 } from "./types";
+
+export const setStartingPlayer = starting => ({
+  type: SET_STARTING_PLAYER,
+  payload: starting
+});
 
 export const updateScore = dice => dispatch => {
   const sortedDice = dice.sort((a, b) => a - b);

@@ -6,7 +6,8 @@ import {
   SETTING_SCORE,
   WIPE_SCORE,
   SET_TOTALS,
-  CLEAR_GAME
+  CLEAR_GAME,
+  SET_STARTING_PLAYER
 } from "../actions/types";
 
 const initialState = {
@@ -94,6 +95,11 @@ export default function(state = initialState, action) {
   var activeArray = state[player].active.slice();
   var newScores = {};
   switch (action.type) {
+    case SET_STARTING_PLAYER:
+      return {
+        ...state,
+        startingPlayer: action.payload
+      };
     case SETTING_SCORE:
       return {
         ...state,

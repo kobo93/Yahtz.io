@@ -13,6 +13,7 @@ export const SET_ROLLING = "server/SET_ROLLING";
 export const RESET_DICE = "server/RESET_DICE";
 
 //score actions
+export const SET_STARTING_PLAYER = "SET_STARTING_PLAYER";
 export const SET_SCORE = "server/SET_SCORE";
 export const UPDATE_SCORE = "server/UPDATE_SCORE";
 export const SETTING_SCORE = "server/SETTING_SCORE";
@@ -38,4 +39,4 @@ export const ROOMS_LIST = "ROOMS_LIST";
 export const JOIN_LOBBY = "server/JOIN_LOBBY";
 export const GET_ROOMS = "server/GET_ROOMS";
 export const SET_ONLINE = "SET_ONLINE";
-export const SET_GAMETYPE = "SET_GAMETYPE";
+export const SET_GAMETYPE = "server/SET_GAMETYPE";

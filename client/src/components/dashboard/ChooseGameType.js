@@ -13,7 +13,6 @@ class ChooseGameType extends Component {
   }
 
   onClick(name) {
-    console.log(name);
     this.props.setGameType({ gameType: name });
   }
 

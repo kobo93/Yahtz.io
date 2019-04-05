@@ -9,9 +9,11 @@ export const changeGameState = () => ({
   type: SET_GAME
 });
 
-export const setRolling = () => ({
-  type: SET_ROLLING
-});
+export const setRolling = diceToRoll => distpatch => {
+  dispatch({
+    type: SET_ROLLING
+  });
+};
 
 export const resetDice = () => ({
   type: RESET_DICE

@@ -12,7 +12,10 @@ class RoomList extends Component {
       Object.keys(rooms).map(room => (
         <button
           type="button"
+          value={room}
+          name="selectedRoom"
           class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+          onClick={this.props.onSelectingRoom}
         >
           <i class="fas fa-user" /> {room}
           <span class="badge badge-primary badge-pill">2</span>
@@ -26,10 +29,11 @@ class RoomList extends Component {
           <ul className="list-group">{content}</ul>
           <br />
           <TextFieldGroup
-            name="roomName"
-            id="roomName"
+            name="selectedRoom"
+            id="roomEntry"
             placeholder="Or Enter Private Lobby Code"
-            onChange={null}
+            value={this.props.selectedRoom}
+            onChange={this.props.onSelectingRoom}
           />
         </div>
       </div>

@@ -27,8 +27,39 @@ class PlayerControls extends Component {
   //  }
   //}
 
+  //rollClick(e) {
+  //  var diceToRoll = [];
+  //  if (
+  //    this.props.yahtz.roll !== 3 &&
+  //    !this.props.yahtz.rolling &&
+  //    (this.props.yahtz.gameText === "Roll em" ||
+  //      !this.props.yahtz.Dice0.selected ||
+  //      !this.props.yahtz.Dice1.selected ||
+  //      !this.props.yahtz.Dice2.selected ||
+  //      !this.props.yahtz.Dice3.selected ||
+  //      !this.props.yahtz.Dice4.selected)
+  //  ) {
+  //    this.props.setRolling();
+  //    if (!this.props.yahtz.Dice0.selected) {
+  //      diceToRoll.push(this.props.yahtz.Dice0);
+  //    }
+  //    if (!this.props.yahtz.Dice1.selected) {
+  //      diceToRoll.push(this.props.yahtz.Dice1);
+  //    }
+  //    if (!this.props.yahtz.Dice2.selected) {
+  //      diceToRoll.push(this.props.yahtz.Dice2);
+  //    }
+  //    if (!this.props.yahtz.Dice3.selected) {
+  //      diceToRoll.push(this.props.yahtz.Dice3);
+  //    }
+  //    if (!this.props.yahtz.Dice4.selected) {
+  //      diceToRoll.push(this.props.yahtz.Dice4);
+  //    }
+  //    this.props.changeGameState();
+  //    diceToRoll.forEach(dice => this.props.handleRollClick(dice));
+  //  }
+  //}
   rollClick(e) {
-    var diceToRoll = [];
     if (
       this.props.yahtz.roll !== 3 &&
       !this.props.yahtz.rolling &&
@@ -39,7 +70,7 @@ class PlayerControls extends Component {
         !this.props.yahtz.Dice3.selected ||
         !this.props.yahtz.Dice4.selected)
     ) {
-      this.props.setRolling();
+      var diceToRoll = [];
       if (!this.props.yahtz.Dice0.selected) {
         diceToRoll.push(this.props.yahtz.Dice0);
       }
@@ -55,8 +86,7 @@ class PlayerControls extends Component {
       if (!this.props.yahtz.Dice4.selected) {
         diceToRoll.push(this.props.yahtz.Dice4);
       }
-      this.props.changeGameState();
-      diceToRoll.forEach(dice => this.props.handleRollClick(dice));
+      this.props.setRolling(diceToRoll);
     }
   }
 
