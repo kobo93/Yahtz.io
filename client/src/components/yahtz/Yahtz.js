@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from "reactstrap";
-import { changeDice, setRolling } from "../../actions/yahtzActions";
+import { changeDice } from "../../actions/yahtzActions";
 import { updateScore, postScore, clearGame } from "../../actions/scoreActions";
 import {
   getCurrentProfile,
@@ -25,9 +25,9 @@ class Yahtz extends Component {
       gameOver: false
     };
 
-    this.changeSide = this.changeSide.bind(this);
+    //this.changeSide = this.changeSide.bind(this);
     this.selectDice = this.selectDice.bind(this);
-    this.handleRollClick = this.handleRollClick.bind(this);
+    //this.handleRollClick = this.handleRollClick.bind(this);
     this.toggleGameOver = this.toggleGameOver.bind(this);
     this.onGameOver = this.onGameOver.bind(this);
   }
@@ -56,29 +56,29 @@ class Yahtz extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (
-      this.props.yahtz.rolling &&
-      !this.props.yahtz.Dice0.rolling &&
-      !this.props.yahtz.Dice1.rolling &&
-      !this.props.yahtz.Dice2.rolling &&
-      !this.props.yahtz.Dice3.rolling &&
-      !this.props.yahtz.Dice4.rolling &&
-      ((this.props.yahtz.roll % 2 === 0 &&
-        this.props.game.gameType === "start") ||
-        (this.props.yahtz.roll % 2 !== 0 &&
-          this.props.game.gameType === "join") ||
-        this.props.game.gameType === "local")
-    ) {
-      const dice = [
-        this.props.yahtz.Dice0.value,
-        this.props.yahtz.Dice1.value,
-        this.props.yahtz.Dice2.value,
-        this.props.yahtz.Dice3.value,
-        this.props.yahtz.Dice4.value
-      ];
-      this.props.updateScore(dice, this.props.score);
-      this.props.setRolling();
-    }
+    //if (
+    //  this.props.yahtz.rolling &&
+    //  !this.props.yahtz.Dice0.rolling &&
+    //  !this.props.yahtz.Dice1.rolling &&
+    //  !this.props.yahtz.Dice2.rolling &&
+    //  !this.props.yahtz.Dice3.rolling &&
+    //  !this.props.yahtz.Dice4.rolling &&
+    //  ((this.props.yahtz.roll % 2 === 0 &&
+    //    this.props.game.gameType === "start") ||
+    //    (this.props.yahtz.roll % 2 !== 0 &&
+    //      this.props.game.gameType === "join") ||
+    //    this.props.game.gameType === "local")
+    //) {
+    //  const dice = [
+    //    this.props.yahtz.Dice0.value,
+    //    this.props.yahtz.Dice1.value,
+    //    this.props.yahtz.Dice2.value,
+    //    this.props.yahtz.Dice3.value,
+    //    this.props.yahtz.Dice4.value
+    //  ];
+    //  this.props.updateScore(dice, this.props.score);
+    //  this.props.setRolling();
+    //}
     if (this.props.scores.turn === 26 && this.state.gameOver !== true) {
       if (this.props.auth.isAuthenticated) {
         const score = {
@@ -95,19 +95,6 @@ class Yahtz extends Component {
     }
   }
 
-  // set the new side for the dice and stop rolling
-  changeSide(dice) {
-    var randomValue = Math.floor(Math.random() * 6) + 1;
-    var newDiceProps = {
-      ...dice,
-      rolling: false,
-      selected: false,
-      value: randomValue,
-      currentClass: "show-" + randomValue
-    };
-    this.props.changeDice(newDiceProps);
-  }
-
   selectDice(dice) {
     //still need to update
     if (!dice.spinning && !dice.rolling) {
@@ -119,26 +106,6 @@ class Yahtz extends Component {
       };
       this.props.changeDice(newDiceProps);
     }
-  }
-
-  //Maybe we should handle he random number while we wait.
-  //set passed dice to rolling then draw random numbers
-  handleRollClick(dice) {
-    var newDiceProps = {
-      ...dice,
-      spinning: false,
-      rolling: true
-      //selected: true
-    };
-    this.props.changeDice(newDiceProps);
-    setTimeout(() => {
-      this.changeSide(dice);
-      //var newDiceProps = {
-      //  ...dice,
-      //  rolling: false
-      //};
-      //changeDice(newDiceProps);
-    }, 3000);
   }
 
   render() {
@@ -243,7 +210,6 @@ Yahtz.propTypes = {
   setCurrentUser: PropTypes.func,
   getCurrentProfile: PropTypes.func.isRequired,
   changeDice: PropTypes.func.isRequired,
-  setRolling: PropTypes.func.isRequired,
   updateScore: PropTypes.func.isRequired,
   postScore: PropTypes.func.isRequired,
   setAchievements: PropTypes.func.isRequired
@@ -264,7 +230,6 @@ export default connect(
     setCurrentUser,
     getCurrentProfile,
     changeDice,
-    setRolling,
     updateScore,
     postScore,
     clearGame,

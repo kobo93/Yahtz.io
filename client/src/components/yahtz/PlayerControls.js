@@ -3,8 +3,12 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 
-import { changeGameState, setRolling } from "../../actions/yahtzActions";
-//import { updateScore } from "../../actions/scoreActions";
+import {
+  changeGameState,
+  setRollings,
+  endRoll
+} from "../../actions/yahtzActions";
+import { updateScore } from "../../actions/scoreActions";
 
 class PlayerControls extends Component {
   constructor() {
@@ -13,19 +17,6 @@ class PlayerControls extends Component {
     this.rollClick = this.rollClick.bind(this);
     this.holdClick = this.holdClick.bind(this);
   }
-
-  //componentWillReceiveProps(nextProps) {
-  //  if (nextProps.yahtz.rolling === false) {
-  //    const dice = [
-  //      this.props.yahtz.Dice0.value,
-  //      this.props.yahtz.Dice1.value,
-  //      this.props.yahtz.Dice2.value,
-  //      this.props.yahtz.Dice3.value,
-  //      this.props.yahtz.Dice4.value
-  //    ];
-  //    this.props.updateScore(dice);
-  //  }
-  //}
 
   //rollClick(e) {
   //  var diceToRoll = [];
@@ -63,30 +54,19 @@ class PlayerControls extends Component {
     if (
       this.props.yahtz.roll !== 3 &&
       !this.props.yahtz.rolling &&
-      (this.props.yahtz.gameText === "Roll em" ||
-        !this.props.yahtz.Dice0.selected ||
+      (!this.props.yahtz.Dice0.selected ||
         !this.props.yahtz.Dice1.selected ||
         !this.props.yahtz.Dice2.selected ||
         !this.props.yahtz.Dice3.selected ||
         !this.props.yahtz.Dice4.selected)
     ) {
       var diceToRoll = [];
-      if (!this.props.yahtz.Dice0.selected) {
-        diceToRoll.push(this.props.yahtz.Dice0);
-      }
-      if (!this.props.yahtz.Dice1.selected) {
-        diceToRoll.push(this.props.yahtz.Dice1);
-      }
-      if (!this.props.yahtz.Dice2.selected) {
-        diceToRoll.push(this.props.yahtz.Dice2);
-      }
-      if (!this.props.yahtz.Dice3.selected) {
-        diceToRoll.push(this.props.yahtz.Dice3);
-      }
-      if (!this.props.yahtz.Dice4.selected) {
-        diceToRoll.push(this.props.yahtz.Dice4);
-      }
-      this.props.setRolling(diceToRoll);
+      diceToRoll.push(this.props.yahtz.Dice0);
+      diceToRoll.push(this.props.yahtz.Dice1);
+      diceToRoll.push(this.props.yahtz.Dice2);
+      diceToRoll.push(this.props.yahtz.Dice3);
+      diceToRoll.push(this.props.yahtz.Dice4);
+      this.props.setRollings(diceToRoll);
     }
   }
 
@@ -121,7 +101,8 @@ PlayerControls.propTypes = {
   yahtz: PropTypes.object.isRequired,
   handleRollClick: PropTypes.func.isRequired,
   changeGameState: PropTypes.func.isRequired,
-  setRolling: PropTypes.func.isRequired
+  setRollings: PropTypes.func.isRequired,
+  updateScore: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -130,5 +111,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { changeGameState, setRolling }
+  { changeGameState, setRollings, endRoll, updateScore }
 )(PlayerControls);

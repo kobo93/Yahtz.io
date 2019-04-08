@@ -18,7 +18,16 @@ export const setStartingPlayer = starting => ({
   payload: starting
 });
 
-export const updateScore = dice => dispatch => {
+export const updateScore = () => (dispatch, getState) => {
+  var state = getState();
+  //Could look a little fancier with some mapping and filtering.
+  var dice = [
+    state.yahtz.Dice0.value,
+    state.yahtz.Dice1.value,
+    state.yahtz.Dice2.value,
+    state.yahtz.Dice3.value,
+    state.yahtz.Dice4.value
+  ];
   const sortedDice = dice.sort((a, b) => a - b);
 
   const ones = dice.filter(die => die === 1).length * 1;
