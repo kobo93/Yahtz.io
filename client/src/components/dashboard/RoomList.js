@@ -4,11 +4,19 @@ import TextFieldGroup from "../common/TextFieldGroup";
 import Spinner from "../common/Spinner";
 
 class RoomList extends Component {
+  //componentDidUpdate(prevState) {
+  //  if (prevState.rooms !== this.props.rooms) {
+  //    this.forceUpdate();
+  //  }
+  //}
+
   render() {
     const { rooms, loading } = this.props;
+    console.log(rooms);
+    console.log(Object.keys(rooms).length);
     const content = loading ? (
       <Spinner />
-    ) : (
+    ) : Object.keys(rooms).length > 0 ? (
       Object.keys(rooms).map(room => (
         <button
           type="button"
@@ -21,6 +29,8 @@ class RoomList extends Component {
           <span class="badge badge-primary badge-pill">2</span>
         </button>
       ))
+    ) : (
+      <h1>No rooms available. Start a room.</h1>
     );
     return (
       <div className="row mt-3">

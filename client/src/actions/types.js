@@ -40,3 +40,4 @@ export const JOIN_LOBBY = "server/JOIN_LOBBY";
 export const GET_ROOMS = "server/GET_ROOMS";
 export const SET_ONLINE = "SET_ONLINE";
 export const SET_GAMETYPE = "server/SET_GAMETYPE";
+export const USER_JOINED_LOBBY = "USER_JOINED_LOBBY";

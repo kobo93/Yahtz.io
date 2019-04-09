@@ -3,7 +3,8 @@ import {
   GET_ROOMS,
   JOIN_LOBBY,
   SET_GAMETYPE,
-  SET_ONLINE
+  SET_ONLINE,
+  USER_JOINED_LOBBY
 } from "../actions/types";
 
 const initialState = {
@@ -11,6 +12,7 @@ const initialState = {
   rooms: null,
   socketid: null,
   currentRoom: null,
+  connectedUser: null,
   gameType: null,
   online: null
 };
@@ -44,6 +46,8 @@ export default function(state = initialState, action) {
         ...state,
         currentRoom: action.payload
       };
+    case USER_JOINED_LOBBY:
+      return;
     default:
       return state;
   }
