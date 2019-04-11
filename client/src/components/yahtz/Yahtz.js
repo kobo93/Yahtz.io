@@ -187,7 +187,7 @@ class Yahtz extends Component {
                 />
               </div>
               <div className="row justify-content-center mt-2">
-                <PlayerControls handleRollClick={this.handleRollClick} />
+                <PlayerControls />
               </div>
             </div>
           </div>

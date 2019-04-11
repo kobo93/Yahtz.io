@@ -6,7 +6,12 @@ import ChooseGameType from "./ChooseGameType";
 import WaitForPlayer from "./WaitForPlayer";
 import RoomList from "./RoomList";
 
-import { setGameType, joinLobby, getRooms } from "../../actions/gameActions";
+import {
+  setGameType,
+  joinLobby,
+  getRooms,
+  setOnline
+} from "../../actions/gameActions";
 import { setStartingPlayer } from "../../actions/scoreActions";
 
 class Dashboard extends Component {
@@ -16,18 +21,24 @@ class Dashboard extends Component {
       buttonText: "Select Option",
       lobbyPrivate: false,
       roomID: null,
-      selectedRoom: null
+      selectedRoom: null,
+      privateLobbyCode: null
     };
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
     //TO DO: work this into one onChange
     this.onSelectingRoom = this.onSelectingRoom.bind(this);
+    this.onSettingPrivateLobbyCode = this.onSettingPrivateLobbyCode.bind(this);
   }
 
-  onSelectingRoom(e) {
-    const newRoom =
-      e.target.name === "roomName" ? e.target.value : e.target.name;
-    console.log(`${e.target.name} + ${e.target.value}`);
+  onSelectingRoom(room) {
+    //const newRoom =
+    //  e.target.name === "roomName" ? e.target.value : e.target.name;
+    //console.log(`${e.target.name} + ${e.target.value}`);
+    this.setState({ selectedRoom: room });
+  }
+
+  onSettingPrivateLobbyCode(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
 
@@ -41,20 +52,18 @@ class Dashboard extends Component {
       case "join":
         this.props.setStartingPlayer(false);
         this.props.joinLobby(this.state.selectedRoom);
-        this.props.setGameType({
-          gameType: gameType,
-          online: true
-        });
+        this.props.setOnline(true);
+      //this.props.setGameType({
+      //  gameType: gameType,
+      //  online: true
+      //});
       case "start":
         this.props.joinLobby(
           `${this.state.lobbyPrivate ? "private" : "public"}/${
             this.state.roomID
           }`
         );
-        this.props.setGameType({
-          gameType: gameType,
-          online: true
-        });
+      //this.props.setOnline(true);
     }
   }
 
@@ -62,6 +71,7 @@ class Dashboard extends Component {
     this.setState({ lobbyPrivate: !this.state.lobbyPrivate });
   }
 
+  //Doing this on connection from the server now :? Not sure which is better.
   componentDidMount() {
     this.props.getRooms();
   }
@@ -111,6 +121,8 @@ class Dashboard extends Component {
             loading={this.props.game.roomsLoading}
             selectedRoom={this.state.selectedRoom}
             onSelectingRoom={this.onSelectingRoom}
+            privateLobbyCode={this.state.privateLobbyCode}
+            onSettingPrivateLobbyCode={this.onSettingPrivateLobbyCode}
           />
         )}
         <div className="row mt-3">
@@ -139,7 +151,8 @@ Dashboard.propTypes = {
   setGameType: PropTypes.func.isRequired,
   getRooms: PropTypes.func.isRequired,
   joinLobby: PropTypes.func.isRequired,
-  setStartingPlayer: PropTypes.func.isRequired
+  setStartingPlayer: PropTypes.func.isRequired,
+  setOnline: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -149,5 +162,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { setGameType, getRooms, joinLobby, setStartingPlayer }
+  { setGameType, getRooms, joinLobby, setStartingPlayer, setOnline }
 )(Dashboard);

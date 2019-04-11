@@ -22,6 +22,7 @@ export default function(state = initialState, action) {
     case SET_GAMETYPE:
       return {
         ...state,
+        currentRoom: null,
         ...action.payload
       };
     case SET_ONLINE:
@@ -47,7 +48,10 @@ export default function(state = initialState, action) {
         currentRoom: action.payload
       };
     case USER_JOINED_LOBBY:
-      return;
+      return {
+        ...state,
+        ...action.payload
+      };
     default:
       return state;
   }

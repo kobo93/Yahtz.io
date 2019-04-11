@@ -40,59 +40,97 @@ app.use("/api/users", users);
 app.use("/api/scores", scores);
 app.use("/api/profile", profile);
 
+// Socket IO
+io.on("disconnect", socket => {
+  console.log("disconnection");
+  console.log(socket);
+});
+
 io.on("connection", socket => {
-  console.log(`a user connected ${socket.id}`);
-  socket.join(["/global", "/newbie"]);
-  socket.on("action", action => {
-    //Just return the public rooms to client
-    var publicRooms = Object.keys(socket.adapter.rooms)
-      .filter(room => room.includes("public/"))
+  var currentRoom;
+  var lobbies;
+  const getLobbies = async function() {
+    return (lobbies = Object.keys(socket.adapter.rooms)
+      .filter(room => room.includes("public/") || room.includes("private/"))
       .reduce((rooms, roomKey) => {
         return {
           ...rooms,
           [roomKey]: socket.adapter.rooms[roomKey]
         };
-      }, {});
-    console.log(publicRooms);
+      }, {}));
+  };
+
+  console.log(`${socket.id} joined newbie`);
+  socket.join(["/global", "/newbie"]);
+
+  //Handle disconnect by sending to the lobby
+  socket.on("disconnect", () => {
+    console.log("leaving currentRoom: ");
+    console.log(currentRoom);
+    socket.to(currentRoom).emit("action", {
+      type: "USER_LEFT_LOBBY"
+    });
+  });
+
+  //Actions sent with "server/" through redux
+  socket.on("action", action => {
+    //Calling this function when starting and joining a lobby
+    //TODO: need to handle errors
     if (action.type === "server/JOIN_LOBBY") {
-      socket.to(action.payload).broadcast.emit("action", {
-        type: "USER_JOINED_LOBBY",
-        payload: {},
-        from: "server"
-      });
       socket.join(action.payload);
-      socket.to("/newbie").broadcast.emit("action", {
-        type: "ROOMS_LIST",
-        payload: { rooms: publicRooms },
+
+      //Good to leave newbie but could be in start waiting then move to join :?
+      //socket.leave("/newbie");
+
+      //This triggers clients not including the socket to enter into the yahtzee game
+      socket.to(action.payload).emit("action", {
+        type: "USER_JOINED_LOBBY",
+        payload: { online: true },
         from: "server"
       });
-    } else if (action.type === "server/SET_GAMETYPE")
+      currentRoom = action.payload;
+      console.log(`setting currentRoom to`);
+      console.log(action.payload);
+      getLobbies()
+        .then(console.log(lobbies))
+        .then(
+          //Update other clients selecting lobby types on the state of the lobbies
+          socket.to("/newbie").emit("action", {
+            type: "ROOMS_LIST",
+            payload: { rooms: lobbies },
+            from: "server"
+          })
+        );
+    }
+    //TODO: Get the lobbies sooner so we can display a bubble indicator on gameTypeButtons. Probably should do on connect.
+    else if (action.type === "server/SET_GAMETYPE") {
       switch (action.payload.gameType) {
         case "start":
           return;
         case "join":
-          socket.emit("action", {
-            type: "ROOMS_LIST",
-            payload: { rooms: publicRooms, socketid: socket.id },
-            from: "server"
-          });
+          //Leave any rooms we might have joined {could this be an issue of one leaving while one joins and cause the join to enter a match with noone}
+          //Return the socket and all available lobbies to the client
+          socket.leave(currentRoom);
+          getLobbies().then(
+            socket.emit("action", {
+              type: "ROOMS_LIST",
+              payload: { rooms: lobbies },
+              from: "server"
+            })
+          );
         case "local":
           socket.leave("/newbie");
       }
-    /*rooms.push(socket.id);
-      socket.join(socket.id);*/ else if (
-      action.type === "server/GET_ROOMS"
-    ) {
-      socket.emit("action", {
-        type: "ROOMS_LIST",
-        payload: { rooms: publicRooms, socketid: socket.id },
-        from: "server"
-      });
-    } else {
-      var room = Object.keys(socket.rooms).find(
-        r => r.includes("private/") || r.includes("public/")
+    } else if (action.type === "server/GET_ROOMS") {
+      getLobbies().then(
+        socket.emit("action", {
+          type: "ROOMS_LIST",
+          payload: { rooms: lobbies, socketid: socket.id },
+          from: "server"
+        })
       );
-      socket.to(room).broadcast.emit("action", {
+    } else {
+      socket.to(currentRoom).emit("action", {
         type: action.type,
         payload: action.payload,
         from: "server"

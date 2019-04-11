@@ -7,10 +7,9 @@ import rootReducer from "./reducers";
 
 const initialState = {};
 
+//Pass to the server any actions starting with server/ and not from the server
 const socket = io("http://localhost:3000");
 const socketIoMiddleware = createSocketIoMiddleWare(socket, (type, payload) => {
-  //console.log("checking");
-  //console.log(socket);
   return payload.from !== "server" && type.includes("server/");
 });
 

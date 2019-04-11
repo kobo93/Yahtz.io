@@ -7,34 +7,19 @@ import InputGroup from "../common/InputGroup";
 
 class WaitForPlayer extends Component {
   render() {
-    return (
-      <div className="row">
-        <div className="col-4 mx-auto">
-          {this.props.roomID === null ? (
-            <h3>Loading room ID</h3>
-          ) : (
-            <h3>Your lobby id is: {this.props.roomID}</h3>
-          )}
-          {/*<div className="form-check form-check-inline">
-            <input
-              className="form-check-input"
-              type="checkbox"
-              id="inlineCheckbox2"
-              value="option2"
-            />
-            <label className="form-check-label" for="inlineCheckbox2">
-              Private
-            </label>
-            <InputGroup
-              id="private"
-              type="checkbox"
-              name="Private"
-              label="Private Lobby"
-              classes={["form-check-input"]}
-              value={this.props.private}
-              onChange={() => this.setState({ private: !this.props.private })}
-            />
-          </div>*/}
+    var content = null;
+    if (this.props.roomID === null) {
+      content = <h3>Loading room ID</h3>;
+    } else if (this.props.game.currentRoom !== null) {
+      content = (
+        <div>
+          <h3>Waiting for player.</h3>
+          <h3>Your lobby id is: {this.props.roomID}</h3>
+        </div>
+      );
+    } else {
+      content = (
+        <div>
           <div className="form-check form-check-inline">
             <input
               className="form-check-input"
@@ -62,6 +47,11 @@ class WaitForPlayer extends Component {
             </label>
           </div>
         </div>
+      );
+    }
+    return (
+      <div className="row">
+        <div className="col-4 mx-auto">{content}</div>
       </div>
     );
   }
