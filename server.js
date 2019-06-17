@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 //DB Config
-const db = process.env.mogoURI || require("./config/keys").mongoURI;
+const db = process.env.mongoURI || require("./config/keys").mongoURI;
 
 //Connect DB
 mongoose
@@ -38,10 +38,31 @@ app.use(passport.initialize());
 //Passport config
 require("./config/passport")(passport);
 
+//Static file declaration
+app.use(express.static(path.join(__dirname, "client/build")));
+
 //User routes
 app.use("/api/users", users);
 app.use("/api/scores", scores);
 app.use("/api/profile", profile);
+
+//production mode
+if (process.env.NODE_ENV === "production") {
+  //app.use(express.static(path.join(__dirname, "client/build")));
+  app.use(express.static("client/build"));
+  //
+  //app.get("*", (req, res) => {
+  //  res.sendfile(path.join((__dirname = "client/build/index.html")));
+  //});
+  app.get("*", (req, res) => {
+    res.sendfile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
+}
+
+//build mode
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname + "/client/public/index.html"));
+});
 
 // Socket IO
 io.on("disconnect", socket => {
