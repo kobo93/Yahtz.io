@@ -8,7 +8,11 @@ import rootReducer from "./reducers";
 const initialState = {};
 
 //Pass to the server any actions starting with server/ and not from the server
-const socket = io("http://localhost:3000");
+var socket = io("https://localhost:3000");
+if (process.env.NODE_ENV && process.env.NODE_ENV === "development") {
+  socket = io("https://rocky-chamber-67675.herokuapp.com/");
+}
+
 const socketIoMiddleware = createSocketIoMiddleWare(socket, (type, payload) => {
   return payload.from !== "server" && type.includes("server/");
 });
