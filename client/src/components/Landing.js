@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
-import Yahtz from "./yahtz/Yahtz";
+//import Yahtz from "./yahtz/Yahtz";
 import Dashboard from "./dashboard/Dashboard";
 
 import setAuthToken from "../utils/setAuthToken";
@@ -33,7 +33,7 @@ class Landing extends Component {
           </b>
         </div>
         <div className="row">
-          {this.props.game.online === null ? <Dashboard /> : <Yahtz />}
+          <Dashboard />
         </div>
       </div>
     );

@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from "reactstrap";
+
+import { setCurrentUser } from "../../actions/authActions";
 import { changeDice } from "../../actions/yahtzActions";
 import { updateScore, postScore, clearGame } from "../../actions/scoreActions";
 import {
@@ -14,7 +15,6 @@ import setAuthToken from "../../utils/setAuthToken";
 import PlayerControls from "./PlayerControls";
 import Dice from "./Dice";
 import Scoreboard from "./Scoreboard";
-import { setCurrentUser } from "../../actions/authActions";
 
 class Yahtz extends Component {
   constructor(props) {

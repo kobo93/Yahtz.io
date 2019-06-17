@@ -21,6 +21,6 @@ export const setGameType = gameType => {
 export const setOnline = isOnline => {
   return {
     type: SET_ONLINE,
-    payload: { isOnline }
+    payload: isOnline
   };
 };

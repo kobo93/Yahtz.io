@@ -191,12 +191,12 @@ export default function(state = initialState, action) {
         state[player].fullHouse +
         state[player].yahtzeeBonus;
 
-      const won =
-        state.turn === 26 &&
-        state.player1.grandtotal > state.player2.grandtotal;
+      const won = null;
+      if (state.turn === 26) {
+        won = state.player1.grandtotal > state.player2.grandtotal;
+      }
 
       return {
-        ...state,
         ...state,
         startingPlayer: !state.startingPlayer,
         won: won,

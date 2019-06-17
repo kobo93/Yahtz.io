@@ -9,11 +9,14 @@ import {
   endRoll
 } from "../../actions/yahtzActions";
 import { updateScore } from "../../actions/scoreActions";
+import InputGroup from "../common/InputGroup";
 
 class PlayerControls extends Component {
   constructor() {
     super();
-
+    this.state = {
+      canRoll: false
+    };
     this.rollClick = this.rollClick.bind(this);
     this.holdClick = this.holdClick.bind(this);
   }
@@ -50,9 +53,31 @@ class PlayerControls extends Component {
   //    diceToRoll.forEach(dice => this.props.handleRollClick(dice));
   //  }
   //}
+
+  componentDidMount() {
+    this.setState({
+      canRoll:
+        (this.props.game.gameType === "start" &&
+          this.props.score.turn % 2 === 0) ||
+        (this.props.game.gameType === "join" &&
+          this.props.score.turn % 2 !== 0) ||
+        this.props.game.gameType === "local"
+    });
+  }
+
+  componentDidUpdate(oldProps) {
+    oldProps.game.turn !== this.props.game.turn &&
+      this.setState({ canRoll: !this.state.canRoll });
+    if (oldProps.yahtz.roll !== this.props.yahtz.roll) {
+      if (this.props.yahtz.roll === 3) {
+        this.setState({ canRoll: false });
+      }
+    }
+  }
+
   rollClick(e) {
     if (
-      this.props.yahtz.roll !== 3 &&
+      this.state.canRoll &&
       !this.props.yahtz.rolling &&
       (!this.props.yahtz.Dice0.selected ||
         !this.props.yahtz.Dice1.selected ||
@@ -77,7 +102,7 @@ class PlayerControls extends Component {
       <div className="player-controls align-self-star">
         <button
           className={classNames("btn", "btn-success", "btn-roll", {
-            disabled: this.props.yahtz.roll === 4
+            disabled: !this.state.canRoll
           })}
           onClick={this.rollClick}
         >
@@ -106,7 +131,9 @@ PlayerControls.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  yahtz: state.yahtz
+  yahtz: state.yahtz,
+  game: state.game,
+  score: state.score
 });
 
 export default connect(

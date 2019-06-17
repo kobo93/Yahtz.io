@@ -13,6 +13,7 @@ import Landing from "./components/Landing";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import Profile from "./components/profile/Profile";
+import Yahtz from "./components/yahtz/Yahtz";
 
 class App extends Component {
   render() {
@@ -25,6 +26,7 @@ class App extends Component {
               <Route exact path="/" component={Landing} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
+              <Route exact path="/game" component={Yahtz} />
               <Switch>
                 <PrivateRoute exact path="/profile" component={Profile} />
               </Switch>

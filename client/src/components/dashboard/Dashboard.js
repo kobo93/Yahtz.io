@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import ChooseGameType from "./ChooseGameType";
@@ -21,48 +22,37 @@ class Dashboard extends Component {
       buttonText: "Select Option",
       lobbyPrivate: false,
       roomID: null,
-      selectedRoom: null,
-      privateLobbyCode: null
+      roomOption: null
     };
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
-    //TO DO: work this into one onChange
     this.onSelectingRoom = this.onSelectingRoom.bind(this);
-    this.onSettingPrivateLobbyCode = this.onSettingPrivateLobbyCode.bind(this);
   }
 
-  onSelectingRoom(room) {
-    //const newRoom =
-    //  e.target.name === "roomName" ? e.target.value : e.target.name;
-    //console.log(`${e.target.name} + ${e.target.value}`);
-    this.setState({ selectedRoom: room });
-  }
-
-  onSettingPrivateLobbyCode(e) {
+  onSelectingRoom(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
 
   onSubmit(gameType) {
     switch (gameType) {
       case "local":
-        return this.props.setGameType({
+        this.props.setGameType({
           gameType: gameType,
           online: false
         });
+        break;
       case "join":
+        //TODO: Need to be checking it is actually a lobby, not full, and waiting for success to move to gameboard [should handle on server]
         this.props.setStartingPlayer(false);
-        this.props.joinLobby(this.state.selectedRoom);
-        this.props.setOnline(true);
-      //this.props.setGameType({
-      //  gameType: gameType,
-      //  online: true
-      //});
+        this.props.joinLobby(this.state.roomOption);
+        break;
       case "start":
         this.props.joinLobby(
           `${this.state.lobbyPrivate ? "private" : "public"}/${
             this.state.roomID
           }`
         );
+        break;
       //this.props.setOnline(true);
     }
   }
@@ -97,10 +87,13 @@ class Dashboard extends Component {
         var roomID = Math.random()
           .toString(36)
           .substr(-5);
-      } while (Object.keys(this.props.game.rooms).includes(roomID));
+      } while (Object.keys(this.props.game.rooms).includes(this.state.roomID));
       {
         this.setState({ roomID });
       }
+    }
+    if (prevState.game.online !== this.props.game.online) {
+      this.props.history.push("/game");
     }
   }
 
@@ -119,23 +112,15 @@ class Dashboard extends Component {
           <RoomList
             rooms={this.props.game.rooms}
             loading={this.props.game.roomsLoading}
-            selectedRoom={this.state.selectedRoom}
+            roomOption={this.state.roomOption}
             onSelectingRoom={this.onSelectingRoom}
-            privateLobbyCode={this.state.privateLobbyCode}
-            onSettingPrivateLobbyCode={this.onSettingPrivateLobbyCode}
           />
         )}
         <div className="row mt-3">
           <button
             className="btn btn-success btn-lg mx-auto"
             disabled={!this.props.game.gameType}
-            onClick={() =>
-              this.onSubmit(
-                this.props.game.gameType,
-                this.state.lobbyPrivate,
-                this.state.lobby
-              )
-            }
+            onClick={() => this.onSubmit(this.props.game.gameType)}
           >
             {this.state.buttonText}
           </button>
@@ -163,4 +148,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { setGameType, getRooms, joinLobby, setStartingPlayer, setOnline }
-)(Dashboard);
+)(withRouter(Dashboard));

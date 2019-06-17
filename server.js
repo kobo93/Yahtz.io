@@ -10,9 +10,12 @@ const profile = require("./routes/api/profile");
 
 const app = express();
 const http = nodehttp.Server(app);
-const io = require("socket.io")(http);
+const io = require("socket.io")(http, {
+  pingTimeout: 60000,
+  pingInterval: 500
+});
 
-const rooms = [];
+//const rooms = [];
 
 //Body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -47,68 +50,67 @@ io.on("disconnect", socket => {
 });
 
 io.on("connection", socket => {
+  console.log(io.sockets.adapter.rooms);
   var currentRoom;
   var lobbies;
+
+  socket.join("/global");
+  //socket.join("/newbie");
+
   const getLobbies = async function() {
-    return (lobbies = Object.keys(socket.adapter.rooms)
-      .filter(room => room.includes("public/") || room.includes("private/"))
+    lobbies = Object.keys(socket.adapter.rooms)
+      .filter(
+        room =>
+          room.includes("public/") && socket.adapter.rooms[room].length === 1
+      )
       .reduce((rooms, roomKey) => {
         return {
           ...rooms,
           [roomKey]: socket.adapter.rooms[roomKey]
         };
-      }, {}));
+      }, {});
   };
-
-  console.log(`${socket.id} joined newbie`);
-  socket.join(["/global", "/newbie"]);
-
   //Handle disconnect by sending to the lobby
-  socket.on("disconnect", () => {
-    console.log("leaving currentRoom: ");
-    console.log(currentRoom);
-    socket.to(currentRoom).emit("action", {
-      type: "USER_LEFT_LOBBY"
+  socket.on("disconnect", reason => {
+    console.log(socket.id);
+    console.log(`leaving currentRoom with reason ${reason}`);
+    Object.keys(socket.rooms).map(room => {
+      socket.to(room).emit("action", {
+        type: "USER_LEFT_LOBBY"
+      });
     });
   });
 
-  //Actions sent with "server/" through redux
   socket.on("action", action => {
-    //Calling this function when starting and joining a lobby
-    //TODO: need to handle errors
     if (action.type === "server/JOIN_LOBBY") {
+      //Both starting and joining an existing room uses this action
       socket.join(action.payload);
-
-      //Good to leave newbie but could be in start waiting then move to join :?
-      //socket.leave("/newbie");
-
-      //This triggers clients not including the socket to enter into the yahtzee game
+      if (socket.adapter.rooms[action.payload].length === 2) {
+        io.in(action.payload).emit("action", {
+          type: "SET_ONLINE"
+        });
+      }
+      //This triggers other sockets to enter into the game
       socket.to(action.payload).emit("action", {
         type: "USER_JOINED_LOBBY",
-        payload: { online: true },
+        //payload: { online: true },
         from: "server"
       });
       currentRoom = action.payload;
-      console.log(`setting currentRoom to`);
-      console.log(action.payload);
-      getLobbies()
-        .then(console.log(lobbies))
-        .then(
-          //Update other clients selecting lobby types on the state of the lobbies
-          socket.to("/newbie").emit("action", {
-            type: "ROOMS_LIST",
-            payload: { rooms: lobbies },
-            from: "server"
-          })
-        );
-    }
-    //TODO: Get the lobbies sooner so we can display a bubble indicator on gameTypeButtons. Probably should do on connect.
-    else if (action.type === "server/SET_GAMETYPE") {
+      getLobbies().then(
+        //Update other sockets in dashboard of the changes. TODO: Use newbie.
+        socket.to("/global").emit("action", {
+          type: "ROOMS_LIST",
+          payload: { rooms: lobbies },
+          from: "server"
+        })
+      );
+    } else if (action.type === "server/SET_GAMETYPE") {
       switch (action.payload.gameType) {
         case "start":
-          return;
+          //BUG? could someone leave while someone is joining?
+          socket.leave(currentRoom);
         case "join":
-          //Leave any rooms we might have joined {could this be an issue of one leaving while one joins and cause the join to enter a match with noone}
           //Return the socket and all available lobbies to the client
           socket.leave(currentRoom);
           getLobbies().then(
@@ -119,7 +121,7 @@ io.on("connection", socket => {
             })
           );
         case "local":
-          socket.leave("/newbie");
+          Object.keys(socket.rooms).map(room => socket.leave(room));
       }
     } else if (action.type === "server/GET_ROOMS") {
       getLobbies().then(
