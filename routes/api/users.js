@@ -7,7 +7,7 @@ const passport = require("passport");
 const validateLoginInput = require("../../validation/login");
 const validateRegisterInput = require("../../validation/register");
 const User = require("../../models/User");
-const keys = require("../../config/keys");
+const keys = process.env.secretKey || require("../../config/keys").secretOrKey;
 
 //@route    GET api/users/test
 //@desc     Tests user route
@@ -71,17 +71,12 @@ router.post("/login", (req, res) => {
     bcrypt.compare(password, user.password).then(isMatch => {
       if (isMatch) {
         const payload = { id: user.id, name: user.name, avatar: user.avatar };
-        jwt.sign(
-          payload,
-          keys.secretOrKey,
-          { expiresIn: 7200 },
-          (err, token) => {
-            res.json({
-              success: true,
-              token: "Bearer " + token
-            });
-          }
-        );
+        jwt.sign(payload, keys, { expiresIn: 7200 }, (err, token) => {
+          res.json({
+            success: true,
+            token: "Bearer " + token
+          });
+        });
       } else {
         errors.password = "Password incorrect";
         return res.status(400).json(errors);
