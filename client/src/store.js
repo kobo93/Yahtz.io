@@ -8,7 +8,7 @@ import rootReducer from "./reducers";
 const initialState = {};
 
 //Pass to the server any actions starting with server/ and not from the server
-var socket = io("https://localhost:3000");
+var socket = io("http://localhost:3000");
 if (process.env.NODE_ENV === "production") {
   socket = io("https://rocky-chamber-67675.herokuapp.com/");
 }

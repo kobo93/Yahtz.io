@@ -9,11 +9,14 @@ import { changeGameState, resetDice } from "../../actions/yahtzActions";
 class Scoreboard extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      canScore: false
+    };
     this.handleClick = this.handleClick.bind(this);
   }
 
   handleClick(e) {
-    if (!this.props.rolling) {
+    if (!this.props.rolling && this.state.canScore) {
       const player = this.props.scores.startingPlayer ? "player1" : "player2";
       const newScore = {
         name: e.target.getAttribute("name"),
@@ -24,14 +27,43 @@ class Scoreboard extends Component {
     }
   }
 
+  componentDidMount() {
+    if (
+      this.props.game.gameType === "join" &&
+      this.props.scores.turn % 2 !== 0
+    ) {
+      this.setState({ canScore: true });
+    }
+    if (
+      this.props.game.gameType === "start" &&
+      this.props.scores.turn % 2 === 0
+    ) {
+      this.setState({ canScore: true });
+    }
+    if (this.props.game.gameType == "local") {
+      this.setState({ canScore: true });
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
     if (
-      !nextProps.scores.player1.active.length ===
+      nextProps.scores.player1.active.length !==
         this.props.scores.player1.active.length ||
-      !nextProps.scores.player2.active.length ===
+      nextProps.scores.player2.active.length !==
         this.props.scores.player2.active.length
     ) {
       this.props.wipeScore(nextProps.scores);
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (
+      this.props.game.gameType !== "local" &&
+      prevProps.scores.turn !== this.props.scores.turn
+    ) {
+      this.setState({
+        canScore: !this.state.canScore
+      });
     }
   }
 
@@ -50,7 +82,6 @@ class Scoreboard extends Component {
     const a1LargeStraight = scores.player1.active.includes("largeStraight");
     const a1Chance = scores.player1.active.includes("chance");
     const a1Yahtzee = scores.player1.active.includes("yahtzee");
-    //const a1YahtzeeBonus = scores.player1.active.includes("yahtzeeBonus");
 
     const a2Ones = scores.player2.active.includes("ones");
     const a2Twos = scores.player2.active.includes("twos");
@@ -65,7 +96,6 @@ class Scoreboard extends Component {
     const a2LargeStraight = scores.player2.active.includes("largeStraight");
     const a2Chance = scores.player2.active.includes("chance");
     const a2Yahtzee = scores.player2.active.includes("yahtzee");
-    //const a2YahtzeeBonus = scores.player2.active.includes("yahtzeeBonus");
 
     return (
       <div className="row">
@@ -380,6 +410,7 @@ class Scoreboard extends Component {
 Scoreboard.propTypes = {
   auth: PropTypes.object,
   scores: PropTypes.object.isRequired,
+  game: PropTypes.object.isRequired,
   setScore: PropTypes.func.isRequired,
   changeGameState: PropTypes.func.isRequired,
   resetDice: PropTypes.func.isRequired,
@@ -388,7 +419,8 @@ Scoreboard.propTypes = {
 
 const mapStateToProps = state => ({
   scores: state.score,
-  auth: state.auth
+  auth: state.auth,
+  game: state.game
 });
 
 export default connect(

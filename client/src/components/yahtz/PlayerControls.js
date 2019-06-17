@@ -9,7 +9,6 @@ import {
   endRoll
 } from "../../actions/yahtzActions";
 import { updateScore } from "../../actions/scoreActions";
-import InputGroup from "../common/InputGroup";
 
 class PlayerControls extends Component {
   constructor() {
@@ -20,39 +19,6 @@ class PlayerControls extends Component {
     this.rollClick = this.rollClick.bind(this);
     this.holdClick = this.holdClick.bind(this);
   }
-
-  //rollClick(e) {
-  //  var diceToRoll = [];
-  //  if (
-  //    this.props.yahtz.roll !== 3 &&
-  //    !this.props.yahtz.rolling &&
-  //    (this.props.yahtz.gameText === "Roll em" ||
-  //      !this.props.yahtz.Dice0.selected ||
-  //      !this.props.yahtz.Dice1.selected ||
-  //      !this.props.yahtz.Dice2.selected ||
-  //      !this.props.yahtz.Dice3.selected ||
-  //      !this.props.yahtz.Dice4.selected)
-  //  ) {
-  //    this.props.setRolling();
-  //    if (!this.props.yahtz.Dice0.selected) {
-  //      diceToRoll.push(this.props.yahtz.Dice0);
-  //    }
-  //    if (!this.props.yahtz.Dice1.selected) {
-  //      diceToRoll.push(this.props.yahtz.Dice1);
-  //    }
-  //    if (!this.props.yahtz.Dice2.selected) {
-  //      diceToRoll.push(this.props.yahtz.Dice2);
-  //    }
-  //    if (!this.props.yahtz.Dice3.selected) {
-  //      diceToRoll.push(this.props.yahtz.Dice3);
-  //    }
-  //    if (!this.props.yahtz.Dice4.selected) {
-  //      diceToRoll.push(this.props.yahtz.Dice4);
-  //    }
-  //    this.props.changeGameState();
-  //    diceToRoll.forEach(dice => this.props.handleRollClick(dice));
-  //  }
-  //}
 
   componentDidMount() {
     this.setState({
@@ -66,8 +32,20 @@ class PlayerControls extends Component {
   }
 
   componentDidUpdate(oldProps) {
-    oldProps.game.turn !== this.props.game.turn &&
-      this.setState({ canRoll: !this.state.canRoll });
+    if (oldProps.score.turn !== this.props.score.turn) {
+      if (
+        this.props.game.gameType === "start" &&
+        this.props.score.turn % 2 === 0
+      ) {
+        this.setState({ canRoll: true });
+      }
+      if (
+        this.props.game.gameType == "join" &&
+        this.props.score.turn % 2 !== 0
+      ) {
+        this.setState({ canRoll: true });
+      }
+    }
     if (oldProps.yahtz.roll !== this.props.yahtz.roll) {
       if (this.props.yahtz.roll === 3) {
         this.setState({ canRoll: false });
@@ -109,14 +87,6 @@ class PlayerControls extends Component {
           <i className="fas fa-dice pr-1" />
           {this.props.yahtz.roll}
         </button>
-        {/*<br />
-        <button
-          className={classNames("btn", "btn-warning", "btn-hold")}
-          onClick={this.holdClick}
-        >
-          <i className="fas fa-hand-holding" />
-          Hold
-        </button>*/}
       </div>
     );
   }

@@ -22,7 +22,8 @@ class Yahtz extends Component {
 
     this.state = {
       modal: false,
-      gameOver: false
+      gameOver: false,
+      canSelectDice: false
     };
 
     //this.changeSide = this.changeSide.bind(this);
@@ -55,30 +56,25 @@ class Yahtz extends Component {
     //this.props.auth.isAuthenticated && this.props.getCurrentProfile();
   }
 
+  componentDidMount() {
+    if (
+      this.props.game.gameType === "start" &&
+      this.props.scores.turn % 2 === 0
+    ) {
+      this.setState({ canSelectDice: true });
+    }
+    if (
+      this.props.game.gameType === "join" &&
+      this.props.scores.turn % 2 !== 0
+    ) {
+      this.setState({ canSelectDice: true });
+    }
+    if (this.props.game.gameType === "local") {
+      this.setState({ canSelectDice: true });
+    }
+  }
+
   componentDidUpdate(prevProps) {
-    //if (
-    //  this.props.yahtz.rolling &&
-    //  !this.props.yahtz.Dice0.rolling &&
-    //  !this.props.yahtz.Dice1.rolling &&
-    //  !this.props.yahtz.Dice2.rolling &&
-    //  !this.props.yahtz.Dice3.rolling &&
-    //  !this.props.yahtz.Dice4.rolling &&
-    //  ((this.props.yahtz.roll % 2 === 0 &&
-    //    this.props.game.gameType === "start") ||
-    //    (this.props.yahtz.roll % 2 !== 0 &&
-    //      this.props.game.gameType === "join") ||
-    //    this.props.game.gameType === "local")
-    //) {
-    //  const dice = [
-    //    this.props.yahtz.Dice0.value,
-    //    this.props.yahtz.Dice1.value,
-    //    this.props.yahtz.Dice2.value,
-    //    this.props.yahtz.Dice3.value,
-    //    this.props.yahtz.Dice4.value
-    //  ];
-    //  this.props.updateScore(dice, this.props.score);
-    //  this.props.setRolling();
-    //}
     if (this.props.scores.turn === 26 && this.state.gameOver !== true) {
       if (this.props.auth.isAuthenticated) {
         const score = {
@@ -93,11 +89,19 @@ class Yahtz extends Component {
       }
       this.onGameOver();
     }
+    if (
+      this.props.game.gameType !== "local" &&
+      this.props.scores.turn !== prevProps.scores.turn
+    ) {
+      this.setState({
+        canSelectDice: !this.state.canSelectDice
+      });
+    }
   }
 
   selectDice(dice) {
     //still need to update
-    if (!dice.spinning && !dice.rolling) {
+    if (!dice.spinning && !dice.rolling && this.state.canSelectDice) {
       var newDiceProps = {
         ...dice,
         spinning: false,

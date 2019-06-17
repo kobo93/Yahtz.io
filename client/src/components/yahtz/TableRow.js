@@ -1,11 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-//import classNames from "classnames";
 
 class TableRow extends Component {
-  //constructor(props) {
-  //  super(props);
-  //}
   render() {
     return (
       <div
