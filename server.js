@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 //DB Config
-const db = require("./config/keys").mongoURI;
+const db = process.env.mogoURI || require("./config/keys").mongoURI;
 
 //Connect DB
 mongoose
@@ -141,6 +141,6 @@ io.on("connection", socket => {
   });
 });
 
-const port = 5100; //process.env.PORT || 5100;
+const port = process.env.PORT || 5100;
 
 http.listen(port, () => console.log(`Server running on ${port}`));
