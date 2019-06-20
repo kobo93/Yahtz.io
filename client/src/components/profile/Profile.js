@@ -69,9 +69,7 @@ class Profile extends Component {
               className="text-muted fas fa-pencil-alt fa-sm"
               style={{ cursor: "pointer" }}
               onClick={this.toggleEdit}
-            >
-              edit
-            </i>
+            />
           </div>
           <div className="col-12 d-flex justify-content-center">
             <p className="text-muted">

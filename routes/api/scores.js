@@ -39,15 +39,24 @@ router.get(
 //@desc     Get all scores sorted by highest score
 //@access   Public
 router.get("/all", (req, res) => {
-  const errors = {};
+  const allScores = {};
 
   Score.find()
     .populate("user", ["name", "avatar"])
     .sort({ grandtotal: -1 })
-    .then(scores => res.json(scores))
-    .catch(err =>
-      res.status(400).json({ noscoresfound: "No scores were found" })
-    );
+    .then(scores => (allScores.highScores = scores))
+    .then(() => {
+      Score.find()
+        .populate("user", ["name", "avatar"])
+        .sort({ date: -1 })
+        .then(scores => (allScores.recentScores = scores))
+        .catch(err =>
+          res
+            .status(400)
+            .json({ noscoresfound: "No scores were found", errors: err })
+        )
+        .then(() => res.json(allScores));
+    });
 });
 
 //@route    GET api/scores/user/:userid

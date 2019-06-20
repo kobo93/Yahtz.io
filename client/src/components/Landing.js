@@ -27,7 +27,7 @@ class Landing extends Component {
   render() {
     return (
       <div className="">
-        <div className="row text-center py-2 logo">
+        <div className="row py-2 logo">
           <b>
             Yaht<span>z</span>
           </b>

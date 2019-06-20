@@ -43,8 +43,8 @@ export const getCurrentProfile = () => dispatch => {
       dispatch({
         type: GET_ERRORS,
         payload: {
-          profile:
-            "Create a profile to save scores to the leaderboard, unlock achievements, and unlock dice skins"
+          profile: err
+          //"Create a profile to save scores to the leaderboard, unlock achievements, and unlock dice skins"
         }
       });
       dispatch(setProfileLoading());

@@ -23,6 +23,7 @@ export const CLEAR_GAME = "server/CLEAR_GAME";
 
 //scores actions
 export const GET_USER_SCORES = "GET_USER_SCORES";
+export const GET_SCORES = "GET_SCORES";
 
 //loading actions
 export const PROFILE_LOADING = "PROFILE_LOADING";

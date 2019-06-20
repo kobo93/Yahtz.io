@@ -1,4 +1,4 @@
-import { GET_USER_SCORES } from "../actions/types";
+import { GET_USER_SCORES, GET_SCORES } from "../actions/types";
 
 const initialState = {
   currentUser: [],
@@ -11,6 +11,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         currentUser: action.payload
+      };
+    case GET_SCORES:
+      return {
+        ...state,
+        scores: action.payload
       };
     default:
       return state;

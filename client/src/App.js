@@ -14,6 +14,7 @@ import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import Profile from "./components/profile/Profile";
 import Yahtz from "./components/yahtz/Yahtz";
+import Leaderboard from "./components/leaderboard/Leaderboard";
 
 class App extends Component {
   render() {
@@ -27,6 +28,7 @@ class App extends Component {
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/game" component={Yahtz} />
+              <Route exact path="/leaderboard" component={Leaderboard} />
               <Switch>
                 <PrivateRoute exact path="/profile" component={Profile} />
               </Switch>

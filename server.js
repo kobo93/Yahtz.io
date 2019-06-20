@@ -65,18 +65,26 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname + "/client/public/index.html"));
 });
 
+function getRooms() {
+  const rooms = io.sockets.adapter.rooms;
+  console.log(rooms);
+}
+
 // Socket IO
 io.on("disconnect", socket => {
-  console.log("disconnection");
-  console.log(socket);
+  Object.keys(socket.rooms).map(room => {
+    socket.to(room).emit("action", {
+      type: "USER_LEFT_LOBBY"
+    });
+  });
 });
 
 io.on("connection", socket => {
-  console.log(io.sockets.adapter.rooms);
+  console.log(`new socket: ${socket.id}`);
   var currentRoom;
   var lobbies;
 
-  socket.join("/global");
+  socket.join("global");
   //socket.join("/newbie");
 
   const getLobbies = async function() {
@@ -86,6 +94,8 @@ io.on("connection", socket => {
           room.includes("public/") && socket.adapter.rooms[room].length === 1
       )
       .reduce((rooms, roomKey) => {
+        console.log("dis");
+        console.log(rooms);
         return {
           ...rooms,
           [roomKey]: socket.adapter.rooms[roomKey]
@@ -106,6 +116,7 @@ io.on("connection", socket => {
   socket.on("action", action => {
     if (action.type === "server/JOIN_LOBBY") {
       //Both starting and joining an existing room uses this action
+      console.log(`socket: ${socket.id} joined: ${action.payload}`);
       socket.join(action.payload);
       if (socket.adapter.rooms[action.payload].length === 2) {
         io.in(action.payload).emit("action", {
@@ -119,26 +130,31 @@ io.on("connection", socket => {
         from: "server"
       });
       currentRoom = action.payload;
-      getLobbies().then(
+      //console.log("global users");
+      //console.log(socket.adapter.rooms["global"].length);
+      getLobbies().then(lobby =>
         //Update other sockets in dashboard of the changes. TODO: Use newbie.
-        socket.to("/global").emit("action", {
-          type: "ROOMS_LIST",
-          payload: { rooms: lobbies },
-          from: "server"
-        })
+        {
+          console.log("dem lobbies");
+          console.log(lobby);
+          io.emit("action", {
+            type: "ROOMS_LIST",
+            payload: { rooms: lobbies, yo: "yolo" },
+            from: "server"
+          });
+        }
       );
     } else if (action.type === "server/SET_GAMETYPE") {
       switch (action.payload.gameType) {
         case "start":
-          //BUG? could someone leave while someone is joining?
-          socket.leave(currentRoom);
+        //BUG? could someone leave while someone is joining?
+        //socket.leave(currentRoom);
         case "join":
           //Return the socket and all available lobbies to the client
-          socket.leave(currentRoom);
-          getLobbies().then(
+          getLobbies().then(lobbies =>
             socket.emit("action", {
               type: "ROOMS_LIST",
-              payload: { rooms: lobbies },
+              payload: { rooms: lobbies, yo: "Here we are" },
               from: "server"
             })
           );

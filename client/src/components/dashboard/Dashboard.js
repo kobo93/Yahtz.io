@@ -64,6 +64,14 @@ class Dashboard extends Component {
   //Doing this on connection from the server now :? Not sure which is better.
   componentDidMount() {
     this.props.getRooms();
+    this.props.setGameType({
+      gameType: null,
+      online: null
+    });
+    var roomID = Math.random()
+      .toString(36)
+      .substr(-5);
+    this.setState({ roomID });
   }
 
   componentDidUpdate(prevState) {
@@ -82,16 +90,21 @@ class Dashboard extends Component {
           this.setState({ buttonText: "Select Option" });
       }
     }
-    if (prevState.game.rooms !== this.props.game.rooms) {
-      do {
-        var roomID = Math.random()
-          .toString(36)
-          .substr(-5);
-      } while (Object.keys(this.props.game.rooms).includes(this.state.roomID));
-      {
-        this.setState({ roomID });
-      }
-    }
+    //if (prevState.game.rooms !== this.props.game.rooms) {
+    //  do {
+    //    var roomID = Math.random()
+    //      .toString(36)
+    //      .substr(-5);
+    //  } while (
+    //    Object.keys(this.props.game.rooms).includes(this.state.roomID) &&
+    //    !this.props.game.rooms[this.state.roomID].sockets.includes(
+    //      this.props.game.socketid
+    //    )
+    //  );
+    //  {
+    //    this.setState({ roomID });
+    //  }
+    //}
     if (prevState.game.online !== this.props.game.online) {
       this.props.history.push("/game");
     }

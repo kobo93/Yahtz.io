@@ -45,6 +45,9 @@ class PlayerControls extends Component {
       ) {
         this.setState({ canRoll: true });
       }
+      if (this.props.game.gameType === "local") {
+        this.setState({ canRoll: true });
+      }
     }
     if (oldProps.yahtz.roll !== this.props.yahtz.roll) {
       if (this.props.yahtz.roll === 3) {

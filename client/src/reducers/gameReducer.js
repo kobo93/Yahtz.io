@@ -36,7 +36,6 @@ export default function(state = initialState, action) {
         roomsLoading: true
       };
     case ROOMS_LIST:
-      console.log("getting rooms");
       return {
         ...state,
         ...action.payload,

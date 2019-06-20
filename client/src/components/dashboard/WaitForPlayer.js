@@ -2,9 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
-import TextFieldGroup from "../common/TextFieldGroup";
-import InputGroup from "../common/InputGroup";
-
 class WaitForPlayer extends Component {
   render() {
     var content = null;
