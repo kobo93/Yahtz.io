@@ -7,6 +7,7 @@ import errorReducer from "./errorReducer";
 import scoreReducer from "./scoreReducer";
 import scoresReducer from "./scoresReducer";
 import loadingReducer from "./loadingReducer";
+import messageReducer from "./messageReducer";
 
 export default combineReducers({
   auth: authReducer,
@@ -16,5 +17,6 @@ export default combineReducers({
   score: scoreReducer,
   errors: errorReducer,
   scores: scoresReducer,
-  loading: loadingReducer
+  loading: loadingReducer,
+  message: messageReducer
 });

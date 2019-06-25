@@ -15,6 +15,7 @@ import setAuthToken from "../../utils/setAuthToken";
 import PlayerControls from "./PlayerControls";
 import Dice from "./Dice";
 import Scoreboard from "./Scoreboard";
+import MessageBoard from "../messageboard/MessageBoard";
 
 class Yahtz extends Component {
   constructor(props) {
@@ -196,8 +197,8 @@ class Yahtz extends Component {
             </div>
           </div>
         </div>
-        <div className="col-md-4 col-sm-12 border border-primary rounded-top my-3">
-          <h1>TO DO: game update/message log board</h1>
+        <div className="col-md-4 col-sm-12 my-3">
+          <MessageBoard />
         </div>
       </div>
     );

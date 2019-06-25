@@ -42,3 +42,7 @@ export const GET_ROOMS = "server/GET_ROOMS";
 export const SET_ONLINE = "SET_ONLINE";
 export const SET_GAMETYPE = "server/SET_GAMETYPE";
 export const USER_JOINED_LOBBY = "USER_JOINED_LOBBY";
+
+//message actions
+export const NEW_MESSAGE = "server/NEW_MESSAGE";
+export const GIF_SEARCH = "GIF_SEARCH";

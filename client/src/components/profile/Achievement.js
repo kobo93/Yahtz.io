@@ -12,6 +12,7 @@ class Achievement extends Component {
           "p-1",
           "border",
           "rounded",
+          "achievement",
           {
             completed: this.props.complete
           }
@@ -19,9 +20,9 @@ class Achievement extends Component {
       >
         <div className="col-2 d-flex flex-column align-self-center">
           <img
-            className="rounded"
+            className="achievementIcon rounded"
             alt={this.props.name}
-            src="https://via.placeholder.com/70"
+            src={this.props.img}
           />
         </div>
         <div className="col d-flex flex-column text-center align-items-center align-self-stretch">

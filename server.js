@@ -8,6 +8,7 @@ const nodehttp = require("http");
 const users = require("./routes/api/users");
 const scores = require("./routes/api/scores");
 const profile = require("./routes/api/profile");
+const message = require("./routes/api/message");
 
 const app = express();
 const http = nodehttp.Server(app);
@@ -46,6 +47,7 @@ app.use(express.static(path.join(__dirname, "client/build")));
 app.use("/api/users", users);
 app.use("/api/scores", scores);
 app.use("/api/profile", profile);
+app.use("/api/message", message);
 
 //production mode
 if (process.env.NODE_ENV === "production") {
@@ -74,7 +76,8 @@ function getRooms() {
 io.on("disconnect", socket => {
   Object.keys(socket.rooms).map(room => {
     socket.to(room).emit("action", {
-      type: "USER_LEFT_LOBBY"
+      type: "USER_LEFT_LOBBY",
+      from: "server"
     });
   });
 });
@@ -94,8 +97,6 @@ io.on("connection", socket => {
           room.includes("public/") && socket.adapter.rooms[room].length === 1
       )
       .reduce((rooms, roomKey) => {
-        console.log("dis");
-        console.log(rooms);
         return {
           ...rooms,
           [roomKey]: socket.adapter.rooms[roomKey]
@@ -108,7 +109,8 @@ io.on("connection", socket => {
     console.log(`leaving currentRoom with reason ${reason}`);
     Object.keys(socket.rooms).map(room => {
       socket.to(room).emit("action", {
-        type: "USER_LEFT_LOBBY"
+        type: "USER_LEFT_LOBBY",
+        from: "server"
       });
     });
   });
@@ -119,27 +121,29 @@ io.on("connection", socket => {
       console.log(`socket: ${socket.id} joined: ${action.payload}`);
       socket.join(action.payload);
       if (socket.adapter.rooms[action.payload].length === 2) {
+        socket.emit("action", {
+          type: "USER_JOINED_LOBBY",
+          from: "server"
+        });
         io.in(action.payload).emit("action", {
-          type: "SET_ONLINE"
+          type: "SET_ONLINE",
+          from: "server"
         });
       }
       //This triggers other sockets to enter into the game
       socket.to(action.payload).emit("action", {
         type: "USER_JOINED_LOBBY",
-        //payload: { online: true },
+        payload: { connectedUser: socket.id },
         from: "server"
       });
       currentRoom = action.payload;
-      //console.log("global users");
-      //console.log(socket.adapter.rooms["global"].length);
-      getLobbies().then(lobby =>
+
+      getLobbies().then(() =>
         //Update other sockets in dashboard of the changes. TODO: Use newbie.
         {
-          console.log("dem lobbies");
-          console.log(lobby);
           io.emit("action", {
             type: "ROOMS_LIST",
-            payload: { rooms: lobbies, yo: "yolo" },
+            payload: { rooms: lobbies },
             from: "server"
           });
         }
@@ -154,7 +158,7 @@ io.on("connection", socket => {
           getLobbies().then(lobbies =>
             socket.emit("action", {
               type: "ROOMS_LIST",
-              payload: { rooms: lobbies, yo: "Here we are" },
+              payload: { rooms: lobbies },
               from: "server"
             })
           );

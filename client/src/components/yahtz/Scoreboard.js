@@ -102,8 +102,10 @@ class Scoreboard extends Component {
         <div className="col">
           <div className="row text-center">
             <div className="col-3" style={{ width: "25%" }} />
-            <div className="col mx-3">Player1</div>
-            <div className="col mx-3">Player2</div>
+            <div className="col mx-3">
+              {this.props.auth.user ? this.props.auth.user.name : "Player1"}
+            </div>
+            <div className="col mx-3">Player 2</div>
           </div>
           <div className="row w-100 text-right">
             <div className="col-3">

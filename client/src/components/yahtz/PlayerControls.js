@@ -97,7 +97,6 @@ class PlayerControls extends Component {
 
 PlayerControls.propTypes = {
   yahtz: PropTypes.object.isRequired,
-  handleRollClick: PropTypes.func.isRequired,
   changeGameState: PropTypes.func.isRequired,
   setRollings: PropTypes.func.isRequired,
   updateScore: PropTypes.func.isRequired

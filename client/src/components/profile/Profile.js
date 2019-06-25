@@ -55,7 +55,7 @@ class Profile extends Component {
         achievements.includes(5) * 450 +
         achievements.includes(6) * 550;
       profileContent = (
-        <div>
+        <React.Fragment>
           <div className="col-12 d-flex justify-content-center">
             <img
               className="rounded-circle"
@@ -108,23 +108,37 @@ class Profile extends Component {
                 />
               </div>
               <div className="col-md-5 col-sm 12">
-                <ScoreChart />
+                <div className="row">
+                  <div className="col-12 mb-3">
+                    <div className="card text-center">
+                      <h4 className="card-header">High Score</h4>
+                      <div className="card-body">
+                        <h3>
+                          {this.props.scores.currentUser.length &&
+                            this.props.scores.currentUser.reduce((a, b) =>
+                              a > b.grandtotal ? a : b.grandtotal
+                            )}
+                        </h3>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <ScoreChart />
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </React.Fragment>
       );
     }
-    return (
-      <div className="row">
-        <div className="col-12">{profileContent}</div>
-      </div>
-    );
+    return <React.Fragment>{profileContent}</React.Fragment>;
   }
 }
 
 Profile.propTypes = {
   auth: PropTypes.object.isRequired,
+  scores: PropTypes.object.isRequired,
   loading: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired,
   getCurrentProfile: PropTypes.func.isRequired
@@ -133,7 +147,8 @@ Profile.propTypes = {
 const mapStateToProps = state => ({
   auth: state.auth,
   loading: state.loading,
-  profile: state.profile
+  profile: state.profile,
+  scores: state.scores
 });
 
 export default connect(

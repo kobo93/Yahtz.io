@@ -17,6 +17,7 @@ class AchievementBoard extends Component {
           description="Win your first match"
           score={100}
           complete={this.props.achievements.includes(0)}
+          img="/img/bl.png"
         />
         <Achievement
           id={1}
@@ -24,6 +25,7 @@ class AchievementBoard extends Component {
           description="Lose a match"
           score={100}
           complete={this.props.achievements.includes(1)}
+          img="/img/pr.png"
         />
         <Achievement
           id={2}
@@ -31,6 +33,7 @@ class AchievementBoard extends Component {
           description="Finish a match with a score of 150 or more"
           score={150}
           complete={this.props.achievements.includes(2)}
+          img="/img/150.png"
         />
         <Achievement
           id={3}
@@ -38,6 +41,7 @@ class AchievementBoard extends Component {
           description="Finish a match with a score of 190 or more"
           score={200}
           complete={this.props.achievements.includes(3)}
+          img="/img/190.png"
         />
         <Achievement
           id={4}
@@ -45,6 +49,7 @@ class AchievementBoard extends Component {
           description="Finish a match with a score of 280 or more"
           score={450}
           complete={this.props.achievements.includes(4)}
+          img="/img/280.png"
         />
         <Achievement
           id={5}
@@ -52,13 +57,15 @@ class AchievementBoard extends Component {
           description="Roll a five of a kind"
           score={450}
           complete={this.props.achievements.includes(5)}
+          img="/img/yahtz.png"
         />
         <Achievement
           id={6}
-          name="The Bonus"
+          name="Lots a yahtz"
           description="Finish a game with a yahtzee bonus"
           score={550}
           complete={this.props.achievements.includes(6)}
+          img="/img/bonus.png"
         />
       </div>
     );

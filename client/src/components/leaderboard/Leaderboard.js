@@ -20,15 +20,13 @@ class Leaderboard extends Component {
   }
 
   dataSort(props) {
-    if (props.target.id != this.state.sortBy) {
+    if (props.target.id !== this.state.sortBy) {
       const antiIndex =
-        props.target.id == "highScores" ? "recentScores" : "highScores";
-      document
-        .getElementsByClassName("sort")
-        [props.target.id].classList.toggle("selected");
-      document
-        .getElementsByClassName("sort")
-        [antiIndex].classList.toggle("selected");
+        props.target.id === "highScores" ? "recentScores" : "highScores";
+      document.getElementsByClassName("sort");
+      props.target.id.classList.toggle("selected");
+      document.getElementsByClassName("sort");
+      antiIndex.classList.toggle("selected");
       this.setState({
         sortBy: props.target.id,
         tableContent: this.props.scores.scores[props.target.id]

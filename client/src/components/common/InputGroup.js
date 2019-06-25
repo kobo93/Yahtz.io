@@ -16,10 +16,9 @@ const InputGroup = ({
   type,
   onChange
 }) => {
-  console.log(...classes);
   return (
     <div className="input-group mb-3">
-      {type === "text" ? (
+      {icon ? (
         <div className="input-group-prepend">
           <span className="input-group-text">
             <i className={icon} />
@@ -47,7 +46,7 @@ const InputGroup = ({
   );
 };
 
-InputGroup.PropTypes = {
+InputGroup.propTypes = {
   id: PropTypes.string,
   name: PropTypes.string.isRequired,
   label: PropTypes.string,

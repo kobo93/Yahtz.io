@@ -52,12 +52,16 @@ class ScoreChart extends Component {
 
   render() {
     return (
-      <div>
-        <h4 className="text-center">Game History</h4>
-        <canvas
-          style={{ width: 200, height: 100 }}
-          ref={node => (this.node = node)}
-        />
+      <div className="col-12">
+        <div className="card text-center">
+          <h4 className="card-header">Game History</h4>
+          <div className="card-body">
+            <canvas
+              style={{ width: 200, height: 100 }}
+              ref={node => (this.node = node)}
+            />
+          </div>
+        </div>
       </div>
     );
   }
