@@ -38,24 +38,24 @@ class AvatarSelection extends Component {
       );
     }
     const avatars2 = [];
-    for (var i = 5; i <= 9; i++) {
+    for (var j = 5; j <= 9; j++) {
       avatars2.push(
         <div
-          key={i}
+          key={j}
           className="col d-flex flex-column form-check form-check-inline"
         >
           <img
             className="mb-1"
-            src={"/img/" + i + ".png"}
-            alt={i}
+            src={"/img/" + j + ".png"}
+            alt={j}
             style={{ width: "50px", height: "50px", marginRight: "5px" }}
           />
           <input
             className="form-check-input"
             type="radio"
-            value={i}
+            value={j}
             onChange={this.onChange}
-            checked={i === this.props.auth.user.avatar}
+            checked={j === this.props.auth.user.avatar}
           />
         </div>
       );
@@ -76,7 +76,4 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(
-  mapStateToProps,
-  { selectAvatar }
-)(AvatarSelection);
+export default connect(mapStateToProps, { selectAvatar })(AvatarSelection);

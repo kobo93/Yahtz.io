@@ -15,7 +15,7 @@ const keys = process.env.secretKey || require("../../config/keys").secretOrKey;
 router.get("/test", (req, res) => res.json({ msg: "Users works" }));
 
 //@route    GET api/users/register
-//@desc     Register user
+//@desc     Register user and generate a profile
 //@access   Public
 router.post("/register", (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body);
@@ -42,6 +42,16 @@ router.post("/register", (req, res) => {
           newUser.password = hash;
           newUser
             .save()
+            .then(user => {
+              console.log({ user });
+              const newProfile = new Profile({
+                user: user._id,
+                achievements: [],
+                diceSkins: [],
+                selectedDice: "default",
+                games: []
+              }).save(err => console.log({ when: "saving doc", error: err }));
+            })
             .then(user => res.json(user))
             .catch(err => console.log(err));
         });

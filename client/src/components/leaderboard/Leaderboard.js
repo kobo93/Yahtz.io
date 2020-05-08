@@ -39,7 +39,7 @@ class Leaderboard extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.scores.scores != prevProps.scores.scores) {
+    if (this.props.scores.scores !== prevProps.scores.scores) {
       console.log("data");
       console.log(this.props.scores.scores["highScores"]);
       this.setState({
@@ -75,10 +75,7 @@ const mapStateToProps = state => ({
   scores: state.scores
 });
 
-export default connect(
-  mapStateToProps,
-  { getScores }
-)(Leaderboard);
+export default connect(mapStateToProps, { getScores })(Leaderboard);
 
 //function toggleSort(index) {
 //  const antiIndex = index == 0 ? 1 : 0;

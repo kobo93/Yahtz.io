@@ -40,7 +40,7 @@ class Profile extends Component {
       } else {
         profileContent = (
           <div>
-            <h3>Something has gone horribly wrong</h3>
+            <h3>Unable to load profile. Please try again.</h3>
           </div>
         );
       }
@@ -79,14 +79,14 @@ class Profile extends Component {
           <div className="col-12 d-flex justify-content-center mb-4">
             <div className="progress w-50">
               <div
-                class="progress-bar"
+                className="progress-bar text-muted"
                 role="progressbar"
                 style={{ width: (playerScore / 2000) * 100 + "%" }}
                 aria-valuenow={(playerScore / 2000) * 100}
                 aria-valuemin="0"
                 aria-valuemax="100"
               >
-                {playerScore} / 2000
+                User Score: {playerScore} / 2000
               </div>
             </div>
           </div>
@@ -151,7 +151,4 @@ const mapStateToProps = state => ({
   scores: state.scores
 });
 
-export default connect(
-  mapStateToProps,
-  { getCurrentProfile }
-)(Profile);
+export default connect(mapStateToProps, { getCurrentProfile })(Profile);

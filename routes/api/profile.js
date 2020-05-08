@@ -54,14 +54,14 @@ router.get("/user/:user_id", (req, res) => {
     );
 });
 
-//@route    GET api/profile
-//@desc     Create or edit user profile
+//@route    POST api/profile
+//@desc     Edit user selected dice [profile]
 //@access   Private
 router.post(
   "/",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    const { errors, isValid } = validateProfileInput(req.body);
+    const { errors, isValid } = validateProfileInput(req.body); //TO DO: validate inputs... :|
 
     if (!isValid) {
       return res.status(400).json(errors);
@@ -88,14 +88,15 @@ router.post(
             return res.status(404).json({ ach: "Something broke... " + err });
           });
       } else {
-        new Profile(profileFields).save().then(profile => res.json(profile));
+        //new Profile(profileFields).save().then(profile => res.json(profile));
+        res.status(400).json({ profile: "There is no profile for this user" });
       }
     });
   }
 );
 
-//@route    GET api/profile/achievement
-//@desc     Create or edit user profile
+//@route    POST api/profile/achievement
+//@desc     Add achievement
 //@access   Private
 router.post(
   "/achievement",

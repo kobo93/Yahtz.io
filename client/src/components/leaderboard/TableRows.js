@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import Row from "./Row";
 
-class TableRows extends React.Component {
+class TableRows extends Component {
   render() {
     if (this.props.users !== undefined) {
       const rows = [];

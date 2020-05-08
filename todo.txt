@@ -1,28 +1,39 @@
 ***
-Design
+Features
 ***
--Create a logo
--Achievement Icons
--Link and create social media accounts
--Design GameBoard/Dashboard
+-Delete profile (deletes all scores from scoreboard too)
 
-***
-Front End
-***
-DONEISH-Build global scoreboard
--Indicate which turn and call player by name
--(v2)Design message center
-
-***
-Bugs
-****
-DONE -Account logout bug [I think delete account from local storage] 
--losing source of truth
 
 ***
 Back End
 ***
 -Handle disconnects
-DONEISH -Why isn't update to global working now :?
--Mailchimp subscribers/come back
 -(v2)Lobby with player rank/highscore/reputation
+-Mailchimp subscribers/come back
+DONEISH -Why isn't update to global working now :?
+
+***
+Design
+***
+-Create a logo
+-Link and create social media accounts
+-Design GameBoard/Dashboard
+DONE-Achievement Icons
+
+***
+Front End
+***
+-Indicate which turn and call player by name
+-(v2)Design message center
+DONEISH-Build global scoreboard
+
+***
+Improvements
+***
+Save profile achievement score instead of calculate on frontEnd
+
+***
+Bugs
+****
+-losing source of truth
+DONE -Account logout bug [I think delete account from local storage] 

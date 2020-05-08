@@ -53,6 +53,8 @@ class Dashboard extends Component {
           }`
         );
         break;
+      default:
+        return;
       //this.props.setOnline(true);
     }
   }
@@ -158,7 +160,10 @@ const mapStateToProps = state => ({
   game: state.game
 });
 
-export default connect(
-  mapStateToProps,
-  { setGameType, getRooms, joinLobby, setStartingPlayer, setOnline }
-)(withRouter(Dashboard));
+export default connect(mapStateToProps, {
+  setGameType,
+  getRooms,
+  joinLobby,
+  setStartingPlayer,
+  setOnline
+})(withRouter(Dashboard));

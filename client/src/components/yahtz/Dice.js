@@ -24,6 +24,10 @@ class Dice extends Component {
   }
 
   render(props) {
+    //const rollingStyle = {
+    //  animation: `spin ${this.props.dice.speed * .26}s infinite linear`
+    //}
+
     return (
       <div
         className={classNames("dice", "d-flex", "justify-content-center", {
@@ -31,7 +35,8 @@ class Dice extends Component {
         })}
         style={{
           "--size": this.props.size + "px",
-          "--sizerem": this.props.size + "rem"
+          "--sizerem": this.props.size + "rem",
+          "--speed": this.props.dice.speed + 3 + "s"
         }}
         onClick={this.clickSelect}
       >
@@ -143,7 +148,4 @@ Dice.propTypes = {
   gameText: PropTypes.string
 };
 
-export default connect(
-  null,
-  { changeDice }
-)(Dice);
+export default connect(null, { changeDice })(Dice);

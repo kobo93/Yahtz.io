@@ -21,7 +21,6 @@ class MessageBoard extends Component {
 
   onSubmit(e) {
     e.preventDefault();
-    console.log(e.target.value);
     const message = {};
     message.message = this.state.message;
     message.username = this.props.auth.user

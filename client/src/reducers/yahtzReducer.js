@@ -11,7 +11,8 @@ const initialState = {
     rolling: false,
     selected: false,
     value: 1,
-    currentClass: ""
+    currentClass: "",
+    speed: 0.6
   },
   Dice1: {
     id: 1,
@@ -19,7 +20,8 @@ const initialState = {
     rolling: false,
     selected: false,
     value: 1,
-    currentClass: ""
+    currentClass: "",
+    speed: 0.5
   },
   Dice2: {
     id: 2,
@@ -27,7 +29,8 @@ const initialState = {
     rolling: false,
     selected: false,
     value: 1,
-    currentClass: ""
+    currentClass: "",
+    speed: 0.6
   },
   Dice3: {
     id: 3,
@@ -35,7 +38,8 @@ const initialState = {
     rolling: false,
     selected: false,
     value: 1,
-    currentClass: ""
+    currentClass: "",
+    speed: 0.7
   },
   Dice4: {
     id: 4,
@@ -43,7 +47,8 @@ const initialState = {
     rolling: false,
     selected: false,
     value: 1,
-    currentClass: ""
+    currentClass: "",
+    speed: 0.3
   }
 };
 

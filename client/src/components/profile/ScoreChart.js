@@ -16,7 +16,7 @@ class ScoreChart extends Component {
       const node = this.node;
       var bgColors = [];
       this.props.scores.currentUser.map((s, i) => {
-        i % 4 === 0
+        return i % 4 === 0
           ? bgColors.push("#3e95cd")
           : i % 3 === 0
           ? bgColors.push("#8e5ea2")
@@ -76,7 +76,4 @@ const mapStateToProps = state => ({
   scores: state.scores
 });
 
-export default connect(
-  mapStateToProps,
-  { getUserScores }
-)(ScoreChart);
+export default connect(mapStateToProps, { getUserScores })(ScoreChart);

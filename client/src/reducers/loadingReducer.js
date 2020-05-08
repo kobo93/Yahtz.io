@@ -1,4 +1,4 @@
-import { PROFILE_LOADING, SCORES_LOADING, GET_ROOMS } from "../actions/types";
+import { PROFILE_LOADING, SCORES_LOADING } from "../actions/types";
 
 const initialState = {
   profileLoading: false,

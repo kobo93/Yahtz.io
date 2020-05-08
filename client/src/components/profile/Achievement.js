@@ -26,7 +26,7 @@ class Achievement extends Component {
           />
         </div>
         <div className="col d-flex flex-column text-center align-items-center align-self-stretch">
-          <h6 className="">{this.props.name}</h6>
+          <h4 className="">{this.props.name}</h4>
           <p className="">{this.props.description}</p>
         </div>
         <div className="col-2 d-flex flex-column align-self-center">

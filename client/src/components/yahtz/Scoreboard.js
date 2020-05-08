@@ -40,7 +40,7 @@ class Scoreboard extends Component {
     ) {
       this.setState({ canScore: true });
     }
-    if (this.props.game.gameType == "local") {
+    if (this.props.game.gameType === "local") {
       this.setState({ canScore: true });
     }
   }
@@ -69,41 +69,46 @@ class Scoreboard extends Component {
 
   render() {
     const { scores } = this.props;
-    const a1Ones = scores.player1.active.includes("ones");
-    const a1Twos = scores.player1.active.includes("twos");
-    const a1Threes = scores.player1.active.includes("threes");
-    const a1Fours = scores.player1.active.includes("fours");
-    const a1Fives = scores.player1.active.includes("fives");
-    const a1Sixes = scores.player1.active.includes("sixes");
-    const a1ThreeOfAKind = scores.player1.active.includes("threeOfAKind");
-    const a1FourOfAKind = scores.player1.active.includes("fourOfAKind");
-    const a1FullHouse = scores.player1.active.includes("fullHouse");
-    const a1SmallStraight = scores.player1.active.includes("smallStraight");
-    const a1LargeStraight = scores.player1.active.includes("largeStraight");
-    const a1Chance = scores.player1.active.includes("chance");
-    const a1Yahtzee = scores.player1.active.includes("yahtzee");
+    const player1 = this.props.scores.player1.active;
+    const player2 = this.props.scores.player2.active;
 
-    const a2Ones = scores.player2.active.includes("ones");
-    const a2Twos = scores.player2.active.includes("twos");
-    const a2Threes = scores.player2.active.includes("threes");
-    const a2Fours = scores.player2.active.includes("fours");
-    const a2Fives = scores.player2.active.includes("fives");
-    const a2Sixes = scores.player2.active.includes("sixes");
-    const a2ThreeOfAKind = scores.player2.active.includes("threeOfAKind");
-    const a2FourOfAKind = scores.player2.active.includes("fourOfAKind");
-    const a2FullHouse = scores.player2.active.includes("fullHouse");
-    const a2SmallStraight = scores.player2.active.includes("smallStraight");
-    const a2LargeStraight = scores.player2.active.includes("largeStraight");
-    const a2Chance = scores.player2.active.includes("chance");
-    const a2Yahtzee = scores.player2.active.includes("yahtzee");
+    const a1Ones = player1.includes("ones");
+    const a1Twos = player1.includes("twos");
+    const a1Threes = player1.includes("threes");
+    const a1Fours = player1.includes("fours");
+    const a1Fives = player1.includes("fives");
+    const a1Sixes = player1.includes("sixes");
+    const a1ThreeOfAKind = player1.includes("threeOfAKind");
+    const a1FourOfAKind = player1.includes("fourOfAKind");
+    const a1FullHouse = player1.includes("fullHouse");
+    const a1SmallStraight = player1.includes("smallStraight");
+    const a1LargeStraight = player1.includes("largeStraight");
+    const a1Chance = player1.includes("chance");
+    const a1Yahtzee = player1.includes("yahtzee");
+
+    const a2Ones = player2.includes("ones");
+    const a2Twos = player2.includes("twos");
+    const a2Threes = player2.includes("threes");
+    const a2Fours = player2.includes("fours");
+    const a2Fives = player2.includes("fives");
+    const a2Sixes = player2.includes("sixes");
+    const a2ThreeOfAKind = player2.includes("threeOfAKind");
+    const a2FourOfAKind = player2.includes("fourOfAKind");
+    const a2FullHouse = player2.includes("fullHouse");
+    const a2SmallStraight = player2.includes("smallStraight");
+    const a2LargeStraight = player2.includes("largeStraight");
+    const a2Chance = player2.includes("chance");
+    const a2Yahtzee = player2.includes("yahtzee");
 
     return (
       <div className="row">
         <div className="col">
-          <div className="row text-center">
+          <div className="row w-100 text-center">
             <div className="col-3" style={{ width: "25%" }} />
             <div className="col mx-3">
-              {this.props.auth.user ? this.props.auth.user.name : "Player1"}
+              {this.props.auth.user && this.props.auth.user.name
+                ? this.props.auth.user.name
+                : "Player1"}
             </div>
             <div className="col mx-3">Player 2</div>
           </div>
@@ -393,13 +398,13 @@ class Scoreboard extends Component {
             <TableRow
               name="grandTotal"
               player="player1"
-              score={this.props.scores.player1.grandtotal}
+              score={scores.player1.grandtotal}
               active={false}
             />
             <TableRow
               name="grandTotal"
               player="player2"
-              score={this.props.scores.player2.grandtotal}
+              score={scores.player2.grandtotal}
               active={false}
             />
           </div>
@@ -425,7 +430,9 @@ const mapStateToProps = state => ({
   game: state.game
 });
 
-export default connect(
-  mapStateToProps,
-  { setScore, changeGameState, resetDice, wipeScore }
-)(Scoreboard);
+export default connect(mapStateToProps, {
+  setScore,
+  changeGameState,
+  resetDice,
+  wipeScore
+})(Scoreboard);

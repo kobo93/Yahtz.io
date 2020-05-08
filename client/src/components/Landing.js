@@ -10,9 +10,9 @@ import { getCurrentProfile } from "../actions/profileActions";
 import { setCurrentUser } from "../actions/authActions";
 
 class Landing extends Component {
-  constructor(props) {
-    super(props);
-  }
+  //constructor(props) {
+  //  super(props);
+  //}
 
   componentWillMount() {
     const token = localStorage.getItem("jwtToken");
@@ -27,7 +27,7 @@ class Landing extends Component {
   render() {
     return (
       <div className="">
-        <div className="row py-2 logo">
+        <div className="row py-2 logo mx-auto d-flex justify-content-center">
           <b>
             Yaht<span>z</span>
           </b>
@@ -59,11 +59,8 @@ const mapStateToProps = state => ({
   game: state.game
 });
 
-export default connect(
-  mapStateToProps,
-  {
-    setAuthToken,
-    setCurrentUser,
-    getCurrentProfile
-  }
-)(Landing);
+export default connect(mapStateToProps, {
+  setAuthToken,
+  setCurrentUser,
+  getCurrentProfile
+})(Landing);

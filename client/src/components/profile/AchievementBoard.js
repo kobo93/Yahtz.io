@@ -14,7 +14,7 @@ class AchievementBoard extends Component {
         <Achievement
           id={0}
           name="Beginner's Luck"
-          description="Win your first match"
+          description="Win a match"
           score={100}
           complete={this.props.achievements.includes(0)}
           img="/img/bl.png"
@@ -62,7 +62,7 @@ class AchievementBoard extends Component {
         <Achievement
           id={6}
           name="Lots a yahtz"
-          description="Finish a game with a yahtzee bonus"
+          description="Finish a match with a yahtzee bonus"
           score={550}
           complete={this.props.achievements.includes(6)}
           img="/img/bonus.png"

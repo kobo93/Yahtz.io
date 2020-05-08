@@ -2,8 +2,8 @@ import {
   SET_DICE,
   SET_GAME,
   SET_ROLLING,
-  RESET_DICE,
-  UPDATE_SCORE
+  RESET_DICE
+  //UPDATE_SCORE
 } from "./types";
 import { updateScore } from "./scoreActions";
 
@@ -32,13 +32,15 @@ export const setRollings = diceToRoll => dispatch => {
         rolling: true
       };
       var randomValue = Math.floor(Math.random() * 6) + 1;
+      var randomDiceSpeed = Math.random();
       var randomDice = {
         ...dice,
         rolling: false,
         selected: false,
         spinning: false,
         value: randomValue,
-        currentClass: "show-" + randomValue
+        currentClass: "show-" + randomValue,
+        speed: randomDiceSpeed
       };
       dispatch({
         type: SET_DICE,
@@ -54,6 +56,7 @@ export const setRollings = diceToRoll => dispatch => {
         }, 3000);
       });
     }
+    return false;
   });
   Promise.all(rollingDice).then(() => {
     dispatch({

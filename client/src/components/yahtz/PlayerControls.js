@@ -40,7 +40,7 @@ class PlayerControls extends Component {
         this.setState({ canRoll: true });
       }
       if (
-        this.props.game.gameType == "join" &&
+        this.props.game.gameType === "join" &&
         this.props.score.turn % 2 !== 0
       ) {
         this.setState({ canRoll: true });
@@ -88,7 +88,7 @@ class PlayerControls extends Component {
           onClick={this.rollClick}
         >
           <i className="fas fa-dice pr-1" />
-          {this.props.yahtz.roll}
+          Roll Dice
         </button>
       </div>
     );
@@ -108,7 +108,9 @@ const mapStateToProps = state => ({
   score: state.score
 });
 
-export default connect(
-  mapStateToProps,
-  { changeGameState, setRollings, endRoll, updateScore }
-)(PlayerControls);
+export default connect(mapStateToProps, {
+  changeGameState,
+  setRollings,
+  endRoll,
+  updateScore
+})(PlayerControls);

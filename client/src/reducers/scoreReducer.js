@@ -1,6 +1,6 @@
 import {
-  SET_ONLINE,
-  SET_GAMETYPE,
+  //SET_ONLINE,
+  //SET_GAMETYPE,
   SET_SCORE,
   UPDATE_SCORE,
   SETTING_SCORE,
@@ -191,7 +191,7 @@ export default function(state = initialState, action) {
         state[player].fullHouse +
         state[player].yahtzeeBonus;
 
-      const won = null;
+      var won = null;
       if (state.turn === 26) {
         won = state.player1.grandtotal > state.player2.grandtotal;
       }

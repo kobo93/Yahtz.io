@@ -22,21 +22,21 @@
   },
   "homepage": "https://github.com/kobo93/Yahtz.io#readme",
   "dependencies": {
-    "axios": "^0.19.0",
+    "axios": "^0.19.1",
     "bcryptjs": "^2.4.3",
-    "body-parser": "^1.18.3",
-    "chart.js": "^2.7.3",
-    "concurrently": "^4.1.0",
-    "express": "^4.16.4",
-    "jsonwebtoken": "^8.4.0",
-    "moment": "^2.23.0",
-    "mongoose": "^5.4.1",
-    "passport": "^0.4.0",
+    "body-parser": "^1.19.0",
+    "chart.js": "^2.9.3",
+    "concurrently": "^4.1.2",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.24.0",
+    "mongoose": "^5.8.7",
+    "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
-    "socket.io": "^2.2.0",
-    "validator": "^10.10.0"
+    "socket.io": "^2.3.0",
+    "validator": "^10.11.0"
   },
   "devDependencies": {
-    "nodemon": "^1.18.9"
+    "nodemon": "^1.19.4"
   }
 }
