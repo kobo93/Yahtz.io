@@ -52,7 +52,8 @@ class MessageBoard extends Component {
             <i className="far fa-user-circle" style={{marginTop: "2px", padding: "3px", flexShrink: "0" }} />
             <h6 style={{padding: "3px", flexShrink: "0"}}>Colin</h6>
               <div style={{background: "lightgrey", borderRadius: "5px", padding: "3px"}}>
-                <h6><small>start a message with /giphy to add a gif</small></h6>
+                <h6><small>   Roll the dice. Each turn you have up to three rolls. Select a corresponding square to score your roll and complete your turn.
+                  <br />You can create a profile to save your score, unlock acheivements, and track how you stack up on the leaderboards.</small></h6>
               </div>
           </div>
         );

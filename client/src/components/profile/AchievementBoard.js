@@ -17,7 +17,7 @@ class AchievementBoard extends Component {
           description="Win a match"
           score={100}
           complete={this.props.achievements.includes(0)}
-          img="/img/bl.png"
+          img="/img/BL.png"
         />
         <Achievement
           id={1}
@@ -25,7 +25,7 @@ class AchievementBoard extends Component {
           description="Lose a match"
           score={100}
           complete={this.props.achievements.includes(1)}
-          img="/img/pr.png"
+          img="/img/PR.png"
         />
         <Achievement
           id={2}
@@ -57,7 +57,7 @@ class AchievementBoard extends Component {
           description="Roll a five of a kind"
           score={450}
           complete={this.props.achievements.includes(5)}
-          img="/img/yahtz.png"
+          img="/img/Yahtz.png"
         />
         <Achievement
           id={6}
@@ -65,7 +65,7 @@ class AchievementBoard extends Component {
           description="Finish a match with a yahtzee bonus"
           score={550}
           complete={this.props.achievements.includes(6)}
-          img="/img/bonus.png"
+          img="/img/Bonus.png"
         />
       </div>
     );
