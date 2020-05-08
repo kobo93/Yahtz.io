@@ -38,46 +38,24 @@ class MessageBoard extends Component {
     const messages = this.props.messages.messages.length ? (
       this.props.messages.messages.map(message => {
         return (
-          <tr
-            style={{
-              minWidth: "100%",
-              maxWidth: "100%",
-              width: "100%"
-            }}
-          >
-            <td>
-              <i className="far fa-user-circle" style={{ marginTop: "8px" }} />
-            </td>
-            <td>
-              <h6>{message.username}</h6>
-            </td>
-            <td>
-              <h6 className="word-wrap:break-word">{message.message}</h6>
-            </td>
-          </tr>
+          <div style={{display: "flex",alignItems: "felx-start"}}>
+            <i className="far fa-user-circle" style={{ marginTop: "2px", padding: "3px", flexShrink: "0"}} />
+            <h6 style={{padding: "3px", flexShrink: "0"}}>{message.username}</h6>
+              <div style={{background: "lightgrey", borderRadius: "5px", padding:"3px"}}>
+                <h6>{message.message}</h6>
+              </div>
+          </div>
         );
       })
     ) : (
-      <tr
-        style={{
-          minWidth: "100%",
-          maxWidth: "100%",
-          width: "100%"
-        }}
-      >
-        <td className="float-left">
-          <i className="far fa-user-circle" style={{ marginTop: "8px" }} />
-        </td>
-        <td className="float-left">
-          <h6>Colin</h6>
-        </td>
-        <td className="float-left">
-          <p className="word-wrap:break-word">
-            <small>start a message with /giphy to add a gif</small>
-          </p>
-        </td>
-      </tr>
-    );
+      <div style={{display: "flex",alignItems: "felx-start"}}>
+            <i className="far fa-user-circle" style={{marginTop: "2px", padding: "3px", flexShrink: "0" }} />
+            <h6 style={{padding: "3px", flexShrink: "0"}}>Colin</h6>
+              <div style={{background: "lightgrey", borderRadius: "5px", padding: "3px"}}>
+                <h6><small>start a message with /giphy to add a gif</small></h6>
+              </div>
+          </div>
+        );
     return (
       <div className="card text-left card-primary">
         <div
@@ -89,12 +67,12 @@ class MessageBoard extends Component {
             Chat
           </h6>
           <div className="btn-group btn-group-xs float-right">
-            <button type="button" className="btn btn-primary">
+            {/*<button type="button" className="btn btn-primary">
               <i className="fas fa-lock" />
             </button>
             <button type="button" className="btn btn-primary">
               <i className="fas fa-cog" />
-            </button>
+    </button>*/}
             <button type="button" className="btn btn-primary">
               <i className="fas fa-times" />
             </button>
@@ -105,21 +83,15 @@ class MessageBoard extends Component {
           className="card-body"
           style={{
             padding: "0 4px",
-            maxHeight: "300px",
+            height: "300px",
             maxWidth: "100%",
-            overflow: "auto"
+            overflow: "auto",
           }}
         >
-          <table
-            className="table table-bordered table-hover table-condensed"
-            style={{ height: "300px" }}
-          >
-            <tbody />
-            {messages}
-          </table>
+          {messages}
         </div>
         <div className="card-footer">
-          <form onSubmit={this.onSubmit}>
+          <form style={{display: "flex"}} onSubmit={this.onSubmit}>
             <InputGroup
               type="text"
               id="message"
@@ -130,7 +102,7 @@ class MessageBoard extends Component {
               onChange={this.onChange}
             />
             <span className="input-group-btn">
-              <input className="btn btn-primary" type="submit" />
+              <input className="btn btn-primary" type="submit" value="Send" />
             </span>
           </form>
         </div>
