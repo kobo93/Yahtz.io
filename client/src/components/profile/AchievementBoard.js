@@ -61,7 +61,7 @@ class AchievementBoard extends Component {
         />
         <Achievement
           id={6}
-          name="Lots a yahtz"
+          name="Lots a Yahtz"
           description="Finish a match with a yahtzee bonus"
           score={550}
           complete={this.props.achievements.includes(6)}

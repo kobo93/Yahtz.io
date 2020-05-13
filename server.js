@@ -69,7 +69,7 @@ app.get("*", (req, res) => {
 
 function getRooms() {
   const rooms = io.sockets.adapter.rooms;
-  console.log(rooms);
+  //console.log(rooms);
 }
 
 // Socket IO
@@ -83,7 +83,7 @@ io.on("disconnect", socket => {
 });
 
 io.on("connection", socket => {
-  console.log(`new socket: ${socket.id}`);
+  //console.log(`new socket: ${socket.id}`);
   var currentRoom;
   var lobbies;
 
@@ -104,9 +104,10 @@ io.on("connection", socket => {
       }, {});
   };
   //Handle disconnect by sending to the lobby
-  socket.on("disconnect", reason => {
-    console.log(socket.id);
-    console.log(`leaving currentRoom with reason ${reason}`);
+  socket.on("disconnecting", reason => {
+    //console.log(socket.id);
+    //console.log({'message':`leaving currentRoom with reason ${reason}`});
+    //console.log(socket.adapter.rooms)
     Object.keys(socket.rooms).map(room => {
       socket.to(room).emit("action", {
         type: "USER_LEFT_LOBBY",
@@ -118,11 +119,12 @@ io.on("connection", socket => {
   socket.on("action", action => {
     if (action.type === "server/JOIN_LOBBY") {
       //Both starting and joining an existing room uses this action
-      console.log(`socket: ${socket.id} joined: ${action.payload}`);
+      //console.log(`socket: ${socket.id} joined: ${action.payload}`);
       socket.join(action.payload);
       if (socket.adapter.rooms[action.payload].length === 2) {
         socket.emit("action", {
           type: "USER_JOINED_LOBBY",
+          payload: {connectedUser: socket.adapter.rooms[action.payload][1]},
           from: "server"
         });
         io.in(action.payload).emit("action", {

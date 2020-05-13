@@ -53,7 +53,7 @@ export const setRollings = diceToRoll => dispatch => {
             payload: randomDice
           });
           resolve();
-        }, 3000);
+        }, 3000); //+ (dice.speed * 1000));
       });
     }
     return false;

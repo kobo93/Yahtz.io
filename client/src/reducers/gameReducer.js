@@ -4,7 +4,8 @@ import {
   JOIN_LOBBY,
   SET_GAMETYPE,
   SET_ONLINE,
-  USER_JOINED_LOBBY
+  USER_JOINED_LOBBY,
+  USER_LEFT_LOBBY
 } from "../actions/types";
 
 const initialState = {
@@ -15,6 +16,7 @@ const initialState = {
   connectedUser: null,
   gameType: null,
   online: null
+  //connectionMessage: null
 };
 
 export default function(state = initialState, action) {
@@ -51,6 +53,12 @@ export default function(state = initialState, action) {
         ...state,
         ...action.payload
       };
+    case USER_LEFT_LOBBY:
+      return {
+        ...state,
+        connectedUser: null//,
+        //connectionMessage: "User disconnected..."
+      }
     default:
       return state;
   }
